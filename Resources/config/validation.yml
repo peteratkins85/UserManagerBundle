@@ -1,5 +1,5 @@
 # Cms/UserManagerBundle/Resources/config/validation.yml
-Cms\UserManagerBundle\Entity\Users:
+Cms\UserManagerBundle\Entity\User:
     properties:
         username:
             - NotBlank: {groups: [registration] , groups: [login] } 
