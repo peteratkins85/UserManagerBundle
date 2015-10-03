@@ -1,0 +1,18 @@
+# Cms/UserManagerBundle/Resources/config/validation.yml
+Cms\UserManagerBundle\Entity\Users:
+    properties:
+        username:
+            - NotBlank: {groups: [registration] , groups: [login] } 
+            - Length: { min: 4, groups: [registration] }
+        password:
+            - NotBlank: { groups: [registration] , groups: [login]  }
+            - Length: { min: 7, groups: [registration] }
+        created:
+            - Type: \DateTime
+        modified:
+            - Type: \DateTime
+        lastlogin:
+            - Type: \DateTime
+        loggedIn:
+            - Type:
+                type: integer 

@@ -1,0 +1,7 @@
+parameters:
+#    atks_cms.example.class: Atks\CmsBundle\Example
+
+services:
+    login_authenticator:
+        class:     Cms\UserManagerBundle\Security\LoginAuthenticator
+        arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager"]

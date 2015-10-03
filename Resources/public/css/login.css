@@ -1,0 +1,48 @@
+body {
+  background-color: #222222; }
+
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #333333;
+  z-index: 99;
+  opacity: 0.4;
+  top: 0;
+  left: 0;
+  /* Theoretically for IE 8 & 9 (more valid) */
+  /* ...but not required as filter works too */
+  /* should come BEFORE filter */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+  /* This works in IE 8 & 9 too */
+  /* ... but also 5, 6, 7 */
+  filter: alpha(opacity=40); }
+
+.Box {
+  position: fixed;
+  left: 50%;
+  margin-left: -250px;
+  width: 500px;
+  top: 35%;
+  z-index: 100;
+  background-color: white; }
+  .Box form {
+    padding: 8px; }
+  .Box .login {
+    width: 350px; }
+  .Box .cent {
+    width: 350px;
+    margin-top: 10px; }
+  .Box .logo {
+    position: absolute;
+    top: -100px;
+    left: 200px;
+    width: 100px;
+    text-align: center; }
+  .Box .form-group {
+    text-align: center; }
+  .Box .form-group input {
+    float: none; }
+
+/*# sourceMappingURL=login.css.map */

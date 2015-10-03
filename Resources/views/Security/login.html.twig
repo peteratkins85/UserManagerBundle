@@ -1,0 +1,41 @@
+ {# src/Atk/CmsBundle/Resources/views/security/login.html.twig #}
+ {% extends 'cms/base.html.twig' %}
+ {% block stylesheets %}
+     <link href="{{ asset('bundles/usermanager/css/login.css') }}" rel="stylesheet" type="text/css"/>
+ {% endblock %}
+ {% block title %}CMS Login{% endblock %}
+ {% trans_default_domain 'FOSUserBundle' %}
+ {% block body %}
+    {% block fos_user_content %}
+        <div class="Box">
+            <div class="logo">
+                Atk Cms
+            </div>
+            <div class="center-block cent">
+                {% if error %}
+                    <div>{{ error|trans }}</div>
+                {% endif %}
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />  
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="_username" class="form-control login" value="{{ last_username }}" required="required" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control login" name="_password" required="required" />
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label for="remember_me">Remember Me</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default" id="_submit" name="_submit" value="Login" />
+                    </div>
+                </form><!--FORM END-->
+            </div><!--center-block END-->
+        </div><!--Box END-->
+    {% endblock fos_user_content %}
+ {% endblock %}
