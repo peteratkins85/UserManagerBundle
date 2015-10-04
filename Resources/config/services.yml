@@ -1,7 +1,22 @@
 parameters:
-#    atks_cms.example.class: Atks\CmsBundle\Example
+    user_provider: Cms\UserManagerBundle\Security\Authenticator\Provider\UserProvider
+    user_entity: Cms\UserManagerBundle\Entity\User
+    user_entity_repository: Cms\UserManagerBundle\Entity\Repository\UserRepository
+    user_factory: Cms\UserManagerBundle\Entity\Factory\UserFactory
+    security_controller: Cms\ProductManagerBundle\Controller\IndexController
 
 services:
+    user:
+        class: "%user_entity%"
+    cms_user_provider:
+        class: "%user_provider%"
+        arguments: ["@user_repository" , "@doctrine.orm.entity_manager"]
+    user_repository:
+        class: "%user_entity_repository%"
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+                - "%user_entity%"
     login_authenticator:
         class:     Cms\UserManagerBundle\Security\LoginAuthenticator
         arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager"]

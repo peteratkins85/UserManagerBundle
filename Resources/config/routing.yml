@@ -1,25 +1,9 @@
-#user_manager_homepage:
-#    path:     /hello/{name}
-#    defaults: { _controller: UserManagerBundle:Dashboard:index }
 cms_home:
     pattern:  /dashboard
     defaults: { _controller: UserManagerBundle:Dashboard:index }
 cms_home2:
     pattern:  /
     defaults: { _controller: UserManagerBundle:Dashboard:index }
-#cms_admin:
-#    pattern:  /cms/admin
-#    defaults: { _controller: UserManagerBundle:Main:admin }
-#cms_page_list:
-#    pattern:  /cms/pages
-#    defaults: { _controller: UserManagerBundle:Page:index }
-#cms_media_list:
-#    pattern:  /cms/media
-#    defaults: { _controller: UserManagerBundle:Media:index }
-#cms_site_select:
-#    pattern:  /site
-#    defaults: { _controller: AtksCmsBundle:Security:siteSelect }
-
-#cms_site_select:
-#    pattern:  /cms/addpage
-#    defaults: { _controller: UserManagerBundle:Page:add }
+cms_login:
+    path:      /login
+    defaults:  { _controller: UserManagerBundle:Security:login}

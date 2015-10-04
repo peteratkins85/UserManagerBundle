@@ -7,22 +7,32 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Cms\UserManagerBundle\Entity\Users;
+use Cms\UserManagerBundle\Entity\User;
+use Cms\UserManagerBundle\Entity\Repository\UserRepository;
 
-class CmsUserProvider implements UserProviderInterface
+
+class UserProvider implements UserProviderInterface
 {
+
+    protected $userRepository;
+    protected $doctrine;
+
+    public function __construct(UserRepository $userRepository, $doctrine){
+
+        $this->userRepository = $userRepository;
+        $this->doctrine = $doctrine;
+
+    }
 
     public function loadUserByUsername($username)
     {
-        // make a call to your webservice here
-        // pretend it returns an array on success, false if there is no user
 
-        if ($userData) {
-            $password = '...';
+        $fail = true;
 
-            // ...
+        if ($username) {
 
-            //return new Users();
+            $user = $this->userRepository->getUserByUsername($username);
+
         }
 
         throw new UsernameNotFoundException(

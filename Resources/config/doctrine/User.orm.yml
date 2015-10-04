@@ -1,7 +1,7 @@
 Cms\UserManagerBundle\Entity\User:
     type: entity
     table: users
-    repositoryClass: Cms\UserManagerBundle\Entity\UserRepository
+    repositoryClass: Cms\UserManagerBundle\Entity\Repository\UserRepository
     id:
         id:
             type: integer
@@ -28,7 +28,7 @@ Cms\UserManagerBundle\Entity\User:
         enabled:
             type: integer
             options:
-                default:0
+                default: 0
         expired:
             type: integer
             options:

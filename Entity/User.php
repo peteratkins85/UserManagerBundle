@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable
 {
 
-
     /**
      * @var integer
      */
@@ -37,10 +36,6 @@ class User implements UserInterface, \Serializable
      */
     private $salt;
 
-    /**
-     * @var array
-     */
-    private $roles;
 
     /**
      * @var integer
@@ -96,7 +91,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -116,10 +111,16 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    public function getRoles(){
+
+        return $this->roles;
+
+    }
+
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -142,7 +143,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -165,7 +166,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get plainPassword
      *
-     * @return string 
+     * @return string
      */
     public function getPlainPassword()
     {
@@ -188,44 +189,13 @@ class User implements UserInterface, \Serializable
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt()
     {
         return $this->salt;
     }
 
-    /**
-     * Set roles
-     *
-     * @param array $roles
-     * @return Users
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Get roles
-     *
-     * @return array 
-     */
-    public function getRoles()
-    {
-        $roles = $this->roles;
-
-        foreach ($this->getGroups() as $group) {
-            $roles = array_merge($roles, $group->getRoles());
-        }
-
-        // we need to make sure to have at least one role
-        $roles[] = static::ROLE_DEFAULT;
-
-        return array_unique($roles);
-    }
     /**
      * Set active
      *
@@ -242,7 +212,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get active
      *
-     * @return integer 
+     * @return integer
      */
     public function getActive()
     {
@@ -265,7 +235,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get expired
      *
-     * @return integer 
+     * @return integer
      */
     public function getExpired()
     {
@@ -288,7 +258,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get expiresAt
      *
-     * @return integer 
+     * @return integer
      */
     public function getExpiresAt()
     {
@@ -311,7 +281,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get credentialsExpired
      *
-     * @return integer 
+     * @return integer
      */
     public function getCredentialsExpired()
     {
@@ -334,7 +304,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get credentialsExpireAt
      *
-     * @return integer 
+     * @return integer
      */
     public function getCredentialsExpireAt()
     {
@@ -357,7 +327,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get lastLogin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastLogin()
     {
@@ -380,7 +350,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get loggedInn
      *
-     * @return integer 
+     * @return integer
      */
     public function getLoggedInn()
     {
@@ -403,7 +373,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -426,7 +396,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get modified
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getModified()
     {
@@ -449,7 +419,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get modifiedBy
      *
-     * @return integer 
+     * @return integer
      */
     public function getModifiedBy()
     {
@@ -491,4 +461,78 @@ class User implements UserInterface, \Serializable
     }
 
 
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var integer
+     */
+    private $enabled;
+
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param integer $enabled
+     * @return User
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return integer
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+    /**
+     * @var array
+     */
+    private $roles = array();
+
+
+    /**
+     * Set roles
+     *
+     * @param string $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = array($roles);
+
+        return $this;
+    }
 }
