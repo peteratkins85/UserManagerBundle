@@ -1,5 +1,5 @@
 parameters:
-    user_provider: Cms\UserManagerBundle\Security\Authenticator\Provider\UserProvider
+    user_provider: Cms\UserManagerBundle\Security\Authentication\Provider\UserProvider
     user_entity: Cms\UserManagerBundle\Entity\User
     user_entity_repository: Cms\UserManagerBundle\Entity\Repository\UserRepository
     user_factory: Cms\UserManagerBundle\Entity\Factory\UserFactory

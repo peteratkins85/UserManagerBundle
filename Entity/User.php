@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable
 {
 
+    const ROLE_DEFAULT = 'ROLE_USER';
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+
     /**
      * @var integer
      */
@@ -112,6 +115,12 @@ class User implements UserInterface, \Serializable
     }
 
     public function getRoles(){
+
+        if (!$this->roles){
+
+            $this->roles[] = static::ROLE_DEFAULT;
+
+        }
 
         return $this->roles;
 
@@ -437,6 +446,7 @@ class User implements UserInterface, \Serializable
             $this->password,
             $this->salt,
             $this->username,
+            $this->email
             ) = $data;
 
     }

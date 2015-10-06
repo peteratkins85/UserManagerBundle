@@ -1,6 +1,6 @@
 <?php
 
-namespace Cms\UserManagerBundle\Security;
+namespace Cms\UserManagerBundle\Security\Authentication\Provider;
 
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
