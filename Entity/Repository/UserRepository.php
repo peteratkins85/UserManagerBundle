@@ -15,10 +15,6 @@ use Cms\CoreBundle\Repository\CoreRepository;
 class UserRepository extends CoreRepository
 {
 
-    private $usersTable = 'UserManagerBundle:User';
-    public $language;
-    public $languageId = 1;
-
     public function getUserByUsername($username , $returnType = 'OBJECT'){
 
         if (!$username){ return false; }
@@ -33,7 +29,7 @@ class UserRepository extends CoreRepository
         if ($returnType == 'ARRAY') {
             $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
         }else{
-            $results = $qb->getQuery()->getResult();
+            $results = $qb->getQuery()->getSingleResult();
         }
 
         return $results;

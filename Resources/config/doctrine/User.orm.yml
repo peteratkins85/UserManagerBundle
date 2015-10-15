@@ -34,11 +34,11 @@ Cms\UserManagerBundle\Entity\User:
             options:
                 default: 0
         expiresAt:
-            type: integer
+            type: datetime
         credentialsExpired:
             type: integer
         credentialsExpireAt:
-            type: integer
+            type: datetime
         lastLogin:
             type: datetime
             nullable: TRUE

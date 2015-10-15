@@ -16,7 +16,12 @@ services:
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments:
-                - "%user_entity%"
+                - "UserManagerBundle:User"
     login_authenticator:
         class:     Cms\UserManagerBundle\Security\LoginAuthenticator
         arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager"]
+#    acme_user.password_resetting:
+#        class: Acme\UserBundle\EventListener\PasswordResettingListener
+#        arguments: [@router]
+#        tags:
+#            - { name: kernel.event_subscriber }

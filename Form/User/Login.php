@@ -35,7 +35,7 @@ class Login extends BaseType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Cms\UserManagerBundle\Entity\Users'
+            'data_class' => 'Cms\UserManagerBundle\Entity\User'
         ));
     }
     

@@ -35,14 +35,21 @@ class UserProvider implements UserProviderInterface
 
         }
 
-        throw new UsernameNotFoundException(
-            sprintf('Username "%s" does not exist.', $username)
-        );
+        if (!$user instanceof User || empty($user)) {
+            throw new UsernameNotFoundException(
+                sprintf('Username "%s" does not exist.', $username)
+            );
+        }else {
+
+            return $user;
+
+        }
+
     }
 
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof Users) {
+        if (!$user instanceof User) {
             throw new UnsupportedUserException(
                 sprintf('Instances of "%s" are not supported.', get_class($user))
             );
@@ -53,6 +60,6 @@ class UserProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        return $class === 'Cms\UserManagerBundle\Entity\Users';
+        return $class === 'Cms\UserManagerBundle\Entity\User';
     }
 }

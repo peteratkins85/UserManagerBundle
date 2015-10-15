@@ -2,39 +2,26 @@
 
 namespace Cms\UserManagerBundle\Controller;
 
+use Cms\CoreBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-//for extending the fos SecurityContoller
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-//use DataLayer\DataHandler;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 
-class SecurityController extends Controller
+class SecurityController extends CoreController
 {
 
     public function loginAction(Request $request)
     {
 
-
-        $userRepo = $this->container->get('user_repository');
-
-        $user = $userRepo->getUserByUsername('peter');
-
-        var_dump($user);
-
-        exit;
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 
         if (class_exists('\Symfony\Component\Security\Core\Security')) {
             $authErrorKey = Security::AUTHENTICATION_ERROR;
             $lastUsernameKey = Security::LAST_USERNAME;
-        } else {
-            // BC for SF < 2.6
-            $authErrorKey = SecurityContextInterface::AUTHENTICATION_ERROR;
-            $lastUsernameKey = SecurityContextInterface::LAST_USERNAME;
         }
 
         // get the error if any (works with forward and redirect -- see below)
@@ -43,6 +30,7 @@ class SecurityController extends Controller
         } elseif (null !== $session && $session->has($authErrorKey)) {
             $error = $session->get($authErrorKey);
             $session->remove($authErrorKey);
+            $error = $error->getMessage();
         } else {
             $error = null;
         }
@@ -56,11 +44,6 @@ class SecurityController extends Controller
 
         if ($this->has('security.csrf.token_manager')) {
             $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
-        } else {
-            // BC for SF < 2.4
-            $csrfToken = $this->has('form.csrf_provider')
-                ? $this->get('form.csrf_provider')->generateCsrfToken('authenticate')
-                : null;
         }
 
         return $this->renderLogin(array(
@@ -70,37 +53,7 @@ class SecurityController extends Controller
         ));
     }
 
-    /***
-     *
-     * For multipl site
-     * This was for CMS remote access project
-     *
-     */
-    public function siteSelectAction(Request $request)
-    {
 
-        $session = $request->getSession();
-        $siteSet = $session->get('siteSet');
-        $securityContext = $this->container->get('security.context');
-
-        if ($siteSet){
-
-            return $this->redirect($this->generateUrl('cms/'));
-
-        }
-
-        //Check if logged in via remember key
-        if( $securityContext->isGranted('IS_AUTHENTICATED_FULLY') ){
-
-            return $this->container->get('templating')->renderResponse('UserManagerBundle:Security:site_select.html.twig', array());
-
-        }else{
-
-            return $this->redirect($this->generateUrl('login'));
-
-        }
-
-    }
 
     public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
@@ -119,6 +72,17 @@ class SecurityController extends Controller
     protected function renderLogin(array $data)
     {
         return $this->render('UserManagerBundle:Security:login.html.twig', $data);
+    }
+
+
+    public function checkAction()
+    {
+        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+    }
+
+    public function logoutAction()
+    {
+        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 
 

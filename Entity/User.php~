@@ -93,11 +93,6 @@ class User implements AdvancedUserInterface, \Serializable
      */
     protected $groups;
 
-    /**
-     * @var \DateTime
-     */
-    private $expiresAt;
-
 
     /**
      * Get id
@@ -291,7 +286,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get expiresAt
      *
-     * @return \DateTime
+     * @return integer
      */
     public function getExpiresAt()
     {
@@ -673,8 +668,5 @@ class User implements AdvancedUserInterface, \Serializable
 
         return true;
     }
-
-
-
 
 }

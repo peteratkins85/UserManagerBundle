@@ -1,9 +1,9 @@
-cms_home:
-    pattern:  /dashboard
-    defaults: { _controller: UserManagerBundle:Dashboard:index }
-cms_home2:
-    pattern:  /
-    defaults: { _controller: UserManagerBundle:Dashboard:index }
 cms_login:
-    path:      /login
+    path:      /admin/login
     defaults:  { _controller: UserManagerBundle:Security:login}
+cms_login_check:
+    path:      /admin/login_check
+    defaults:  { _controller: UserManagerBundle:Security:check}
+cms_login_out:
+    path:      /admin/logout
+    defaults:  { _controller: UserManagerBundle:Security:logout}

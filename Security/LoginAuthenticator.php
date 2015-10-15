@@ -1,6 +1,5 @@
 <?php
-// src/Acme/HelloBundle/Security/TimeAuthenticator.php
-namespace Atks\CmsBundle\Security;
+namespace Cms\UserManagerBundle\Security;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
@@ -44,7 +43,7 @@ class LoginAuthenticator implements SimpleFormAuthenticatorInterface
             
             $now = new \DateTime();
             $user->setLastlogin($now);
-            $user->setLoggedIn($user->getLoggedIn()+1);
+            $user->setLoggedInn($user->getLoggedInn()+1);
             $this->em->flush();
             
         }
