@@ -1,6 +1,7 @@
 <?php
 namespace Cms\UserManagerBundle\Security;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -16,10 +17,11 @@ class LoginAuthenticator implements SimpleFormAuthenticatorInterface
 {
     private $encoderFactory;
 
-    public function __construct(EncoderFactoryInterface $encoderFactory, EntityManager $entityManager)
+    public function __construct(EncoderFactoryInterface $encoderFactory, EntityManager $entityManager, ContainerInterface $container)
     {
         $this->encoderFactory = $encoderFactory;
         $this->em = $entityManager;
+        $this->container = $container;
     }
 
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
@@ -38,13 +40,22 @@ class LoginAuthenticator implements SimpleFormAuthenticatorInterface
             $token->getCredentials(),
             $user->getSalt()
         );
-        
+
+        $session = $this->container->get('session');
+
+        //get default language
+
+
+
+        $session->language('language/id');
+
         if ($passwordValid) {
             
             $now = new \DateTime();
             $user->setLastlogin($now);
             $user->setLoggedInn($user->getLoggedInn()+1);
             $this->em->flush();
+
             
         }
 

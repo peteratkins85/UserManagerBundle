@@ -19,7 +19,7 @@ services:
                 - "UserManagerBundle:User"
     login_authenticator:
         class:     Cms\UserManagerBundle\Security\LoginAuthenticator
-        arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager"]
+        arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager","@service_container"]
 #    acme_user.password_resetting:
 #        class: Acme\UserBundle\EventListener\PasswordResettingListener
 #        arguments: [@router]
