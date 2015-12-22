@@ -1,41 +1,89 @@
  {# src/Atk/CmsBundle/Resources/views/security/login.html.twig #}
  {% extends 'cms/base.html.twig' %}
  {% block stylesheets %}
-     <link href="{{ asset('bundles/usermanager/css/login.css') }}" rel="stylesheet" type="text/css"/>
  {% endblock %}
  {% block title %}CMS Login{% endblock %}
- {% trans_default_domain 'FOSUserBundle' %}
+ {% block bodyClass %} sign-in contrast-background {% endblock %}
+ {#{% trans_default_domain 'FOSUserBundle' %}#}
  {% block body %}
-    {% block fos_user_content %}
-        <div class="Box">
-            <div class="logo">
-                Atk Cms
-            </div>
-            <div class="center-block cent">
-                {% if error %}
-                    <div>{{ error|trans }}</div>
-                {% endif %}
-                <form action="{{ path("cms_login_check") }}" method="post">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />  
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="_username" class="form-control login" value="{{ last_username }}" required="required" />
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" class="form-control login" name="_password" required="required" />
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                            <label for="remember_me">Remember Me</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-default" id="_submit" name="_submit" value="Login" />
-                    </div>
-                </form><!--FORM END-->
-            </div><!--center-block END-->
-        </div><!--Box END-->
-    {% endblock fos_user_content %}
+     <div id='wrapper'>
+         <div class='application'>
+             <div class='application-content'>
+                 <a href='sign_in.html'>
+                     <div class='icon-heart'></div>
+                     <span>Oni System</span>
+                 </a>
+             </div>
+         </div>
+         <div class='controls'>
+             <div class='caret'></div>
+             <div class='form-wrapper'>
+                 <h1 class='text-center'>Sign in</h1>
+                 <form action="{{ path("cms_login_check") }}" method="post">
+                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                     <div class='row-fluid'>
+                         <div class='span12 icon-over-input'>
+                             <input value="{{ last_username }}" placeholder="Username" class="span12" name="_username" type="text" />
+                             <i class='icon-user muted'></i>
+                         </div>
+                     </div>
+                     <div class='row-fluid'>
+                         <div class='span12 icon-over-input'>
+                             <input value="" placeholder="Password" class="span12" name="_password" type="password" />
+                             <i class='icon-lock muted'></i>
+                         </div>
+                     </div>
+                     <label class='checkbox' for='remember_me'>
+                         <input id='remember_me' name='_remember_me' type='checkbox' value='1'>
+                         Remember me
+                     </label>
+                     <input type="submit" class="btn btn-block" id="_submit" name="_submit" value="Sign in" />
+                 </form>
+                 {#<div class='text-center'>#}
+                     {#<hr class='hr-normal'>#}
+                     {#<a href='forgot_password.html'>Forgot your password?</a>#}
+                 {#</div>#}
+             </div>
+         </div>
+         {#<div class='login-action text-center'>#}
+             {#<a href='sign_up.html'>#}
+                 {#<i class='icon-user'></i>#}
+                 {#New to Flatty?#}
+                 {#<strong>Sign up</strong>#}
+             {#</a>#}
+         {#</div>#}
+     </div>
+
+
+
+        {#<div class="Box">#}
+            {#<div class="logo">#}
+                {#Atk Cms#}
+            {#</div>#}
+            {#<div class="center-block cent">#}
+                {#{% if error %}#}
+                    {#<div>{{ error|trans }}</div>#}
+                {#{% endif %}#}
+                {#<form action="{{ path("cms_login_check") }}" method="post">#}
+                    {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
+                    {#<div class="form-group">#}
+                        {#<label for="username">Username</label>#}
+                        {#<input type="text" id="username" name="_username" class="form-control login" value="{{ last_username }}" required="required" />#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#<label for="password">Password</label>#}
+                        {#<input type="password" id="password" class="form-control login" name="_password" required="required" />#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#<div class="checkbox">#}
+                            {#<input type="checkbox" id="remember_me" name="_remember_me" value="on" />#}
+                            {#<label for="remember_me">Remember Me</label>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#<input type="submit" class="btn btn-default" id="_submit" name="_submit" value="Login" />#}
+                    {#</div>#}
+                {#</form><!--FORM END-->#}
+            {#</div><!--center-block END-->#}
+        {#</div><!--Box END-->#}
  {% endblock %}

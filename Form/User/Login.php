@@ -5,9 +5,9 @@ namespace Cms\UserManagerBundle\Form\User;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
-class Login extends BaseType
+class Login //extends BaseType
 {
-    
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction($options['action']);
@@ -31,12 +31,12 @@ class Login extends BaseType
     {
         return 'login';
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Cms\UserManagerBundle\Entity\User'
         ));
     }
-    
+
 }

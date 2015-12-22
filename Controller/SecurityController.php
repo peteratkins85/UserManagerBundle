@@ -3,6 +3,7 @@
 namespace Cms\UserManagerBundle\Controller;
 
 use Cms\CoreBundle\Controller\CoreController;
+use Cms\ProductManagerBundle\ProductEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,14 +30,10 @@ class SecurityController extends CoreController
             $error = $request->attributes->get($authErrorKey);
         } elseif (null !== $session && $session->has($authErrorKey)) {
             $error = $session->get($authErrorKey);
-            $session->remove($authErrorKey);
             $error = $error->getMessage();
+            $session->remove($authErrorKey);
         } else {
             $error = null;
-        }
-
-        if (!$error instanceof AuthenticationException) {
-            $error = null; // The value does not come from the security component.
         }
 
         // last username entered by the user
@@ -45,6 +42,8 @@ class SecurityController extends CoreController
         if ($this->has('security.csrf.token_manager')) {
             $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
         }
+
+        echo $error;
 
         return $this->renderLogin(array(
             'last_username' => $lastUsername,

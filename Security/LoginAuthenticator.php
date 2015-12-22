@@ -32,8 +32,8 @@ class LoginAuthenticator implements SimpleFormAuthenticatorInterface
         } catch (UsernameNotFoundException $e) {
             throw new AuthenticationException('Invalid username or password');
         }
-        
-        
+
+
         $encoder = $this->encoderFactory->getEncoder($user);
         $passwordValid = $encoder->isPasswordValid(
             $user->getPassword(),
@@ -41,33 +41,35 @@ class LoginAuthenticator implements SimpleFormAuthenticatorInterface
             $user->getSalt()
         );
 
-        $session = $this->container->get('session');
-
+        //$session = $this->container->get('session');
         //get default language
-
-
-
-        $session->language('language/id');
+        //$session->language('language/id');
 
         if ($passwordValid) {
-            
+
+
+
             $now = new \DateTime();
             $user->setLastlogin($now);
             $user->setLoggedInn($user->getLoggedInn()+1);
             $this->em->flush();
+            $roles = $user->getRoles();
 
-            
+            return new UsernamePasswordToken(
+                $user,
+                $user->getPassword(),
+                $providerKey,
+                $user->getRoles()
+            );
+
+
+        }else{
+
+            throw new AuthenticationException('Invalid username or password');
+
         }
 
-        return new UsernamePasswordToken(
-            $user,
-            $user->getPassword(),
-            $providerKey,
-            $user->getRoles()
-        );
 
-        
-        throw new AuthenticationException('Invalid username or password');
     }
 
     public function supportsToken(TokenInterface $token, $providerKey)

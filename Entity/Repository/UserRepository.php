@@ -5,6 +5,7 @@ namespace Cms\UserManagerBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 
 use Cms\CoreBundle\Repository\CoreRepository;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * UsersRepository
@@ -27,9 +28,13 @@ class UserRepository extends CoreRepository
             ->setMaxResults(1);
 
         if ($returnType == 'ARRAY') {
-            $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+            $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
         }else{
-            $results = $qb->getQuery()->getSingleResult();
+
+            $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+            //expecting only one result so set the result to the first array element
+            $results = isset($results[0]) ? $results[0] : false;
+
         }
 
         return $results;

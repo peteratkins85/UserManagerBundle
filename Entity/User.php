@@ -51,6 +51,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $expired;
 
+    /**
+     * @var integer
+     */
+    private $locked = 0;
+
 
 
     /**
@@ -491,7 +496,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function eraseCredentials()
     {
-        $this->plainPassword = null;
+        //$this->plainPassword = null;
     }
 
 
