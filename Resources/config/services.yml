@@ -16,7 +16,7 @@ services:
         class: "%user_entity_repository%"
         factory: [ '@doctrine.orm.default_entity_manager',  getRepository]
         arguments:
-                - "UserManagerBundle:User"
+                - "%user_entity%"
     login_authenticator:
         class:     Cms\UserManagerBundle\Security\LoginAuthenticator
         arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager","@service_container"]

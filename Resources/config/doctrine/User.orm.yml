@@ -25,6 +25,10 @@ Cms\UserManagerBundle\Entity\User:
             type: integer
             options:
                 default: 0
+        active:
+            type: integer
+            options:
+                default: 0
         enabled:
             type: integer
             options:
@@ -49,9 +53,15 @@ Cms\UserManagerBundle\Entity\User:
         created:
             type: datetime
             nullable: TRUE
+            gedmo:
+              timestampable:
+                on: create
         modified:
-            type: time
+            type: datetime
             nullable: TRUE
+            gedmo:
+              timestampable:
+                on: update
         modifiedBy:
             type: integer
             nullable: TRUE
