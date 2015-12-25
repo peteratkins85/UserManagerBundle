@@ -19,7 +19,11 @@ class SecurityController extends CoreController
 
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
-
+//        $user = $this->getDoctrine()
+//        ->getRepository('UserManagerBundle:User')
+//        ->find(1);
+//        echo $this->get('security.password_encoder')->encodePassword($user,'admin');
+//exit;
         if (class_exists('\Symfony\Component\Security\Core\Security')) {
             $authErrorKey = Security::AUTHENTICATION_ERROR;
             $lastUsernameKey = Security::LAST_USERNAME;

@@ -1,6 +1,7 @@
 <?php
 namespace Cms\UserManagerBundle\EventListeners;
 
+use Cms\CoreBundle\SessionKeys;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
@@ -46,7 +47,7 @@ class UserEventSubscriber implements EventSubscriberInterface
         $language = $languageRepository->getDefaultLanguage();
 
         if ($language) {
-            $session->set('language', $language);
+            $session->set(SessionKeys::LANGUAGE_KEY, $language->getId());
         }
 
         if ($user instanceof UserInterface){

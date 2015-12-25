@@ -2,6 +2,8 @@
 
 namespace Cms\UserManagerBundle\Entity\Repository;
 
+use Cms\CoreBundle\CoreGlobals;
+use Cms\ProductManagerBundle\ProductEvents;
 use Doctrine\ORM\EntityRepository;
 
 
@@ -16,13 +18,14 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class UserRepository extends EntityRepository
 {
 
+
     public function getUserByUsername($username , $returnType = 'OBJECT'){
 
         if (!$username){ return false; }
 
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('u')
-            ->from($this->usersTable, 'u')
+            ->from(CoreGlobals::USERS_ENTITY, 'u')
             ->where('u.username = :username')
             ->setParameter('username', $username)
             ->setMaxResults(1);
