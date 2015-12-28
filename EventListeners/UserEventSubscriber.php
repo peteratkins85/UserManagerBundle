@@ -47,7 +47,7 @@ class UserEventSubscriber implements EventSubscriberInterface
         $language = $languageRepository->getDefaultLanguage();
 
         if ($language) {
-            $session->set(SessionKeys::LANGUAGE_KEY, $language->getId());
+            $session->set(SessionKeys::LOCALE_KEY, $language->getLocale());
         }
 
         if ($user instanceof UserInterface){
