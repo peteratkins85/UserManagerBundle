@@ -1,7 +1,7 @@
-Cms\UserManagerBundle\Entity\User:
+Oni\UserManagerBundle\Entity\User:
     type: entity
-    table: users
-    repositoryClass: Cms\UserManagerBundle\Entity\Repository\UserRepository
+    table: oni_users
+    repositoryClass: Oni\UserManagerBundle\Entity\Repository\UserRepository
     id:
         id:
             type: integer

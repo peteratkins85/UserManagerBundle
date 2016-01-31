@@ -1,6 +1,6 @@
 <?php
 // src/Atks/CmsBundle/Form/User/Login.php
-namespace Cms\UserManagerBundle\Form\User;
+namespace Oni\UserManagerBundle\Form\User;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
@@ -35,7 +35,7 @@ class Login //extends BaseType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Cms\UserManagerBundle\Entity\User'
+            'data_class' => 'Oni\UserManagerBundle\Entity\User'
         ));
     }
 

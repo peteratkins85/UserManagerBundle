@@ -1,35 +1,30 @@
 parameters:
-    user_provider: Cms\UserManagerBundle\Security\Authentication\Provider\UserProvider
-    user_entity: Cms\UserManagerBundle\Entity\User
-    user_entity_repository: Cms\UserManagerBundle\Entity\Repository\UserRepository
-    user_factory: Cms\UserManagerBundle\Entity\Factory\UserFactory
-    security_controller: Cms\ProductManagerBundle\Controller\IndexController
-    user_event_subscriber: Cms\UserManagerBundle\EventListeners\UserEventSubscriber
+
 
 services:
-    user:
-        class: "%user_entity%"
-    cms_user_provider:
-        class: "%user_provider%"
-        arguments: ["@user_repository" , "@doctrine.orm.entity_manager"]
-    user_repository:
-        class: "%user_entity_repository%"
+    oni_user_entity:
+        class: Oni\UserManagerBundle\Entity\User
+    oni_user_provider:
+        class: Oni\UserManagerBundle\Security\Authentication\Provider\UserProvider
+        arguments: ["@oni_user_repository" , "@doctrine.orm.entity_manager"]
+    oni_user_repository:
+        class: Oni\UserManagerBundle\Entity\Repository\UserRepository
         factory: [ '@doctrine.orm.default_entity_manager',  getRepository]
         arguments:
-                - "%user_entity%"
-    login_authenticator:
-        class:     Cms\UserManagerBundle\Security\LoginAuthenticator
+                - Oni\UserManagerBundle\Entity\User
+    oni_login_authenticator:
+        class:     Oni\UserManagerBundle\Security\LoginAuthenticator
         arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager","@service_container"]
-    user.security.authentication.provider:
-        class: Cms\UserManagerBundle\Security\Authentication\Provider\AuthenticationProvider
+    oni_user.security.authentication.provider:
+        class: Oni\UserManagerBundle\Security\Authentication\Provider\AuthenticationProvider
         arguments:
             - '' # User Provider
             - '@security.user_checker'
             - '' # Provider-shared Key
             - '@security.encoder_factory'
         public: false
-    user_event_subscriber:
-        class: "%user_event_subscriber%"
+    oni_user_event_subscriber:
+        class: Oni\UserManagerBundle\EventListeners\UserEventSubscriber
         arguments: ["@doctrine.orm.entity_manager", "@service_container"]
         tags:
            - { name: kernel.event_subscriber }

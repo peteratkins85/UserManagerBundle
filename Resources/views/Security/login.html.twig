@@ -1,11 +1,13 @@
  {# src/Atk/CmsBundle/Resources/views/security/login.html.twig #}
- {% extends 'cms/base.html.twig' %}
+ {% extends 'CoreBundle:cms:base.html.twig' %}
+
  {% block stylesheets %}
  {% endblock %}
  {% block title %}CMS Login{% endblock %}
  {% block bodyClass %} sign-in contrast-background {% endblock %}
  {#{% trans_default_domain 'FOSUserBundle' %}#}
  {% block body %}
+
      <div id='wrapper'>
          <div class='application'>
              <div class='application-content'>

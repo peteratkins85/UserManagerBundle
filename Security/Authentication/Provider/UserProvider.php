@@ -1,14 +1,14 @@
 <?php
 
-namespace Cms\UserManagerBundle\Security\Authentication\Provider;
+namespace Oni\UserManagerBundle\Security\Authentication\Provider;
 
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Cms\UserManagerBundle\Entity\User;
-use Cms\UserManagerBundle\Entity\Repository\UserRepository;
+use Oni\UserManagerBundle\Entity\User;
+use Oni\UserManagerBundle\Entity\Repository\UserRepository;
 
 
 class UserProvider implements UserProviderInterface
@@ -26,8 +26,6 @@ class UserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-
-        $fail = true;
 
         if ($username) {
 
@@ -60,6 +58,6 @@ class UserProvider implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        return $class === 'Cms\UserManagerBundle\Entity\User';
+        return $class === 'Oni\UserManagerBundle\Entity\User';
     }
 }

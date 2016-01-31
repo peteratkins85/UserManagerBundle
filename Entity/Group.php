@@ -1,34 +1,46 @@
 <?php
 
-namespace Cms\UserManagerBundle\Entity;
+namespace Oni\UserManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Group
+ *
+ * @ORM\Table(name="oni_user_groups")
+ * @ORM\Entity(repositoryClass="Oni\UserManagerBundle\Entity\GroupsRepository")
  */
 class Group
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50)
      */
     private $name;
 
     /**
      * @var array
+     *
+     * @ORM\Column(name="roles", type="array")
      */
     private $roles;
+
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -39,7 +51,8 @@ class Group
      * Set name
      *
      * @param string $name
-     * @return Groups
+     *
+     * @return Group
      */
     public function setName($name)
     {
@@ -51,7 +64,7 @@ class Group
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -62,7 +75,8 @@ class Group
      * Set roles
      *
      * @param array $roles
-     * @return Groups
+     *
+     * @return Group
      */
     public function setRoles($roles)
     {
@@ -72,23 +86,9 @@ class Group
     }
 
     /**
-     * @param string $role
-     *
-     * @return Group
-     */
-    public function addRole($role)
-    {
-        if (!$this->hasRole($role)) {
-            $this->roles[] = strtoupper($role);
-        }
-
-        return $this;
-    }
-
-    /**
      * Get roles
      *
-     * @return array 
+     * @return array
      */
     public function getRoles()
     {

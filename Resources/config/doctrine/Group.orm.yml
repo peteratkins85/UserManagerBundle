@@ -1,7 +1,7 @@
-Cms\UserManagerBundle\Entity\Group:
+Oni\UserManagerBundle\Entity\Group:
     type: entity
-    table: user_groups
-    repositoryClass: Cms\UserManagerBundle\Entity\GroupsRepository
+    table: oni_user_groups
+    repositoryClass: Oni\UserManagerBundle\Entity\GroupsRepository
     id:
         id:
             type: integer

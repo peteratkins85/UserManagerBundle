@@ -6,14 +6,14 @@
  * Time: 19:42
  */
 
-namespace Cms\ProductManagerBundle\DataFixtures\ORM;
+namespace Oni\ProductManagerBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Cms\UserManagerBundle\Entity\User;
+use Oni\UserManagerBundle\Entity\User;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 
@@ -49,7 +49,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface ,F
         $user->setUsername('admin');
         $user->setPlainPassword('admin');
         $user->setExpiresAt(new \DateTime('+ 2 years'));
-        $user->setRoles('ROLE_ADMIN');
+        $user->setRoles(array('ROLE_ADMIN'));
         $user->setEnabled(1);
 
         $em = $this->container->get('doctrine.orm.default_entity_manager');

@@ -1,5 +1,5 @@
 <?php
-namespace Cms\UserManagerBundle\Security;
+namespace Oni\UserManagerBundle\Security;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;

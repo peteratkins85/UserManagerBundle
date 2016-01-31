@@ -1,9 +1,9 @@
 <?php
 
-namespace Cms\UserManagerBundle\Entity\Repository;
+namespace Oni\UserManagerBundle\Entity\Repository;
 
-use Cms\CoreBundle\CoreGlobals;
-use Cms\ProductManagerBundle\ProductEvents;
+use Oni\CoreBundle\CoreGlobals;
+use Oni\ProductManagerBundle\ProductEvents;
 use Doctrine\ORM\EntityRepository;
 
 
@@ -19,7 +19,7 @@ class UserRepository extends EntityRepository
 {
 
 
-    public function getUserByUsername($username , $returnType = 'OBJECT'){
+    public function getUserByUsername($username){
 
         if (!$username){ return false; }
 
@@ -30,15 +30,9 @@ class UserRepository extends EntityRepository
             ->setParameter('username', $username)
             ->setMaxResults(1);
 
-        if ($returnType == 'ARRAY') {
-            $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
-        }else{
-
-            $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-            //expecting only one result so set the result to the first array element
-            $results = isset($results[0]) ? $results[0] : false;
-
-        }
+        $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+        //expecting only one result so set the result to the first array element
+        $results = isset($results[0]) ? $results[0] : false;
 
         return $results;
 

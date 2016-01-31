@@ -1,7 +1,7 @@
 <?php
-namespace Cms\UserManagerBundle\EventListeners;
+namespace Oni\UserManagerBundle\EventListeners;
 
-use Cms\CoreBundle\SessionKeys;
+use Oni\CoreBundle\SessionKeys;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
@@ -43,7 +43,7 @@ class UserEventSubscriber implements EventSubscriberInterface
         $token = $event->getAuthenticationToken();
         $user = $token->getUser();
         $session = $this->container->get('session');
-        $languageRepository = $this->container->get('language_repository');
+        $languageRepository = $this->container->get('oni_language_repository');
         $language = $languageRepository->getDefaultLanguage();
 
         if ($language) {

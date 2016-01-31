@@ -1,5 +1,5 @@
 <?php
-namespace Cms\UserManagerBundle\Security\Authentication\Token;
+namespace Oni\UserManagerBundle\Security\Authentication\Token;
 
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
