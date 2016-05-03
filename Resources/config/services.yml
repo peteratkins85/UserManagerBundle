@@ -4,17 +4,44 @@ parameters:
 services:
     oni_user_entity:
         class: Oni\UserManagerBundle\Entity\User
+    oni_user_service:
+        class: Oni\UserManagerBundle\Service\UserService
+        factory: [ '@oni_user_service_factory', getService]
+        arguments:
+            - '@service_container'
     oni_user_provider:
         class: Oni\UserManagerBundle\Security\Authentication\Provider\UserProvider
-        arguments: ["@oni_user_repository" , "@doctrine.orm.entity_manager"]
-    oni_user_repository:
-        class: Oni\UserManagerBundle\Entity\Repository\UserRepository
-        factory: [ '@doctrine.orm.default_entity_manager',  getRepository]
-        arguments:
-                - Oni\UserManagerBundle\Entity\User
+        arguments: ["@oni_user_service"]
     oni_login_authenticator:
         class:     Oni\UserManagerBundle\Security\LoginAuthenticator
         arguments: ["@security.encoder_factory", "@doctrine.orm.entity_manager","@service_container"]
+    # Controllers
+    oni_users_controller:
+        class: Oni\UserManagerBundle\Controller\UserController
+        factory: [ '@oni_user_controller_factory', getController]
+        arguments:
+            - '@service_container'
+    #Repositories
+    oni_groups_repository:
+        class: Oni\UserManagerBundle\Entity\Repository\GroupRepository
+        factory: [ '@oni_repository_factory',  getRepository]
+        arguments:
+            - Oni\UserManagerBundle\Entity\Group
+    oni_user_repository:
+        class: Oni\UserManagerBundle\Entity\Repository\UserRepository
+        factory: [ '@oni_repository_factory',  getRepository]
+        arguments:
+            - Oni\UserManagerBundle\Entity\User
+    # Forms
+    oni_user_form:
+        class: Oni\UserManagerBundle\Form\UserType
+        factory: [ '@oni_user_form_factory', getForm]
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: form.type, alias: oni_admin_user }
+
+    #Authenticaion & Security
     oni_user.security.authentication.provider:
         class: Oni\UserManagerBundle\Security\Authentication\Provider\AuthenticationProvider
         arguments:
@@ -24,10 +51,17 @@ services:
             - '@security.encoder_factory'
         public: false
     oni_user_event_subscriber:
-        class: Oni\UserManagerBundle\EventListeners\UserEventSubscriber
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        class: Oni\UserManagerBundle\EventListeners\AuthEventSubscriber
+        arguments: ["@service_container"]
         tags:
            - { name: kernel.event_subscriber }
+    oni_user_event_subscriber:
+        class: Oni\UserManagerBundle\EventListeners\UserEventSubscriber
+        arguments: ["@service_container"]
+        tags:
+          - { name: oni.event_subscriber }
+
+
 
 #    user.security.authentication.listener:
 #        class: AppBundle\Security\Firewall\WsseListener

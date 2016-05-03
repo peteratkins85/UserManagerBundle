@@ -3,9 +3,9 @@
 namespace Oni\UserManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use FOS\UserBundle\Model\GroupInterface;
+use Oni\UserManagerBundle\Entity\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-
 
 /**
  * User
@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="oni_users")
  * @ORM\Entity(repositoryClass="Oni\UserManagerBundle\Entity\Repository\UserRepository")
  */
-class User implements AdvancedUserInterface, \Serializable
+class User implements UserInterface
 {
 
     const ROLE_DEFAULT = 'ROLE_USER';
@@ -38,6 +38,20 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="firstName", type="string", nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastName", type="string", nullable=true)
+     */
+    private $lastName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="password", type="string")
      */
     private $password;
@@ -45,7 +59,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="plainPassword", type="string")
+     * @ORM\Column(name="plainPassword", type="string" , nullable=true)
      */
     private $plainPassword;
 
@@ -59,7 +73,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string")
+     * @ORM\Column(name="salt", type="string" ,nullable=true)
      */
     private $salt;
 
@@ -71,44 +85,45 @@ class User implements AdvancedUserInterface, \Serializable
     private $roles;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="active", type="integer")
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active = 0;
 
     /**
-     * @var integer
      *
-     * @ORM\Column(name="enabled", type="integer")
+     * @var boolean
+     * @ORM\Column(name="enabled",type="boolean")
+     *
      */
-    private $enabled = 0;
+    private $enabled = true;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="expired", type="integer")
+     * @ORM\Column(name="expired", type="boolean")
      */
     private $expired = 0;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expiresAt", type="datetime")
+     * @ORM\Column(name="expiresAt", type="datetime",nullable=true)
      */
     private $expiresAt;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="credentialsExpired", type="integer")
+     * @ORM\Column(name="credentialsExpired", type="integer",nullable=true)
      */
     private $credentialsExpired;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="credentialsExpireAt", type="datetime")
+     * @ORM\Column(name="credentialsExpireAt", type="datetime",nullable=true)
      */
     private $credentialsExpireAt;
 
@@ -148,24 +163,31 @@ class User implements AdvancedUserInterface, \Serializable
     private $modifiedBy;
 
     /**
-     * @var Collection
+     * @ORM\ManyToMany(targetEntity="Oni\UserManagerBundle\Entity\Group")
+     * @ORM\JoinTable(name="oni_user_r_group",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
      */
     protected $groups;
 
 
     /**
-     * @var integer
+     * @var boolean
+     *
+     * @ORM\Column(name="locked", type="boolean")
      */
-    private $locked = 0;
+    private $locked = false;
 
 
     public function __construct(){
 
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
-        $this->enabled = 1;
-        $this->locked = 0;
-        $this->expired = 0;
-        $this->roles = array();
+        $this->enabled = true;
+        $this->locked = false;
+        $this->expired = false;
+        $this->password = 'UNSET_PASSWORD';
+        $this->roles = array($this::ROLE_DEFAULT);
         $this->credentialsExpired = 0;
 
     }
@@ -307,7 +329,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return User
      */
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
 
@@ -359,12 +381,12 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return boolean
      */
-    public function hasGroup($name)
+    public function hasGroup($name = '')
     {
         return in_array($name, $this->getGroupNames());
     }
 
-    public function addGroup(GroupInterface $group)
+    public function addGroup(Group $group)
     {
         if (!$this->getGroups()->contains($group)) {
             $this->getGroups()->add($group);
@@ -409,7 +431,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set enabled
      *
-     * @param integer $enabled
+     * @param boolean $enabled
      *
      * @return User
      */
@@ -423,11 +445,11 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get enabled
      *
-     * @return integer
+     * @return boolean
      */
     public function getEnabled()
     {
-        return $this->enabled;
+        return $this->enabled ;
     }
 
     /**
@@ -533,7 +555,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @return User
      */
-    public function setLastLogin($lastLogin)
+    public function setLastLogin(\DateTime $lastLogin = null)
     {
         $this->lastLogin = $lastLogin;
 
@@ -718,6 +740,10 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->enabled;
     }
 
+
+
+
+
     public function isCredentialsNonExpired()
     {
 
@@ -734,5 +760,132 @@ class User implements AdvancedUserInterface, \Serializable
         return true;*/
     }
 
+    /**
+     * @param string $firstName
+     *
+     * @return $this
+     *
+     */
+    public function setFirstName($firstName){
 
+        $this->firstName = $firstName;
+
+        return $this;
+
+    }
+
+    public function getFirstName(){
+
+        return $this->firstName;
+
+    }
+
+    /**
+     * @param string $lastName
+     *
+     * @return $this
+     */
+    public function setLastName($lastName){
+
+        $this->lastName = $lastName;
+
+        return $this;
+
+    }
+
+    public function getLastName(){
+
+        return $this->lastName;
+
+    }
+
+
+    /**
+     * Gets the confirmation token.
+     *
+     * @return string
+     */
+    public function getConfirmationToken() {
+        // TODO: Implement getConfirmationToken() method.
+    }
+
+    /**
+     * Sets the confirmation token
+     *
+     * @param string $confirmationToken
+     *
+     * @return self
+     */
+    public function setConfirmationToken( $confirmationToken ) {
+        // TODO: Implement setConfirmationToken() method.
+    }
+
+    /**
+     * Sets the timestamp that the user requested a password reset.
+     *
+     * @param null|\DateTime $date
+     *
+     * @return self
+     */
+    public function setPasswordRequestedAt( \DateTime $date = null ) {
+        // TODO: Implement setPasswordRequestedAt() method.
+    }
+
+    /**
+     * Checks whether the password reset request has expired.
+     *
+     * @param integer $ttl Requests older than this many seconds will be considered expired
+     *
+     * @return boolean true if the user's password request is non expired, false otherwise
+     */
+    public function isPasswordRequestNonExpired( $ttl ) {
+        // TODO: Implement isPasswordRequestNonExpired() method.
+    }
+
+    /**
+     * Never use this to check if this user has access to anything!
+     *
+     * Use the SecurityContext, or an implementation of AccessDecisionManager
+     * instead, e.g.
+     *
+     *         $securityContext->isGranted('ROLE_USER');
+     *
+     * @param string $role
+     *
+     * @return boolean
+     */
+    public function hasRole( $role ) {
+        // TODO: Implement hasRole() method.
+    }
+
+    /**
+     * Removes a role to the user.
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function removeRole( $role ) {
+        // TODO: Implement removeRole() method.
+    }
+
+    /**
+     * Tells if the the given user has the super admin role.
+     *
+     * @return boolean
+     */
+    public function isSuperAdmin() {
+        // TODO: Implement isSuperAdmin() method.
+    }
+
+    /**
+     * Sets the locking status of the user.
+     *
+     * @param boolean $boolean
+     *
+     * @return self
+     */
+    public function setLocked( $boolean ) {
+        // TODO: Implement setLocked() method.
+    }
 }

@@ -1,0 +1,15 @@
+services:
+    #Controllers
+    oni_user_controller_factory:
+        class: Oni\UserManagerBundle\Factory\Controller\UserControllerFactory
+
+    #Forms
+    oni_user_form_factory:
+        class: Oni\UserManagerBundle\Factory\Form\UserTypeFactory
+
+    #Repositories
+
+    #Services
+    oni_user_service_factory:
+        class: Oni\UserManagerBundle\Factory\Service\UserServiceFactory
+

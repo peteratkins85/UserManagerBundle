@@ -3,12 +3,13 @@
 namespace Oni\UserManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Group
  *
  * @ORM\Table(name="oni_user_groups")
- * @ORM\Entity(repositoryClass="Oni\UserManagerBundle\Entity\GroupsRepository")
+ * @ORM\Entity(repositoryClass="Oni\UserManagerBundle\Entity\Repository\GroupRepository")
  */
 class Group
 {
@@ -23,7 +24,7 @@ class Group
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=50)
      */
     private $name;
@@ -34,6 +35,13 @@ class Group
      * @ORM\Column(name="roles", type="array")
      */
     private $roles;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="accessLevel", type="integer")
+     */
+    private $accessLevel;
 
 
 
@@ -94,4 +102,31 @@ class Group
     {
         return $this->roles;
     }
+
+
+    /**
+     * Set roles
+     *
+     * @param array $accessLevel
+     *
+     * @return Group
+     */
+    public function setAccessLevel($accessLevel)
+    {
+        $this->accessLevel = $accessLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array
+     */
+    public function getAccessLevel()
+    {
+        return $this->accessLevel;
+    }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace Oni\UserManagerBundle\Entity\Repository;
 
+use Oni\CoreBundle\CoreBundle;
 use Oni\CoreBundle\CoreGlobals;
 use Oni\ProductManagerBundle\ProductEvents;
 use Doctrine\ORM\EntityRepository;
@@ -18,14 +19,15 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class UserRepository extends EntityRepository
 {
 
+    private $table = CoreGlobals::USERS_ENTITY;
 
-    public function getUserByUsername($username){
+    public function findByUsername($username){
 
-        if (!$username){ return false; }
+        if (empty($username)){ return false; }
 
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('u')
-            ->from(CoreGlobals::USERS_ENTITY, 'u')
+            ->from($this->table, 'u')
             ->where('u.username = :username')
             ->setParameter('username', $username)
             ->setMaxResults(1);
@@ -33,6 +35,49 @@ class UserRepository extends EntityRepository
         $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
         //expecting only one result so set the result to the first array element
         $results = isset($results[0]) ? $results[0] : false;
+
+        return $results;
+
+    }
+
+    /**
+     *
+     * Get all users with field titles
+     *
+     * @param bool $offset
+     * @param bool $maxResults
+     *
+     * @return array
+     */
+    public function getAllUsersAsArray($offset = false, $maxResults = false){
+
+        
+        $results = array();
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder()
+                   ->select('u')
+                   ->from($this->table, 'u');
+
+        if ($offset > 0){
+            $queryBuilder->setFirstResult($offset);
+        }
+        If ($maxResults > 0){
+            $queryBuilder->setMaxResults($maxResults);
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        $query->setHint(
+            \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+
+        $query->setHint(\Gedmo\Translatable\TranslatableListener::HINT_FALLBACK, 1);
+
+        //$results = new Paginator($query, $fetchJoinCollection = true);
+
+        $results = $query->getResult();
+
 
         return $results;
 
