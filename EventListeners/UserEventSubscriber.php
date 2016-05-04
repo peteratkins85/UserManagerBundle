@@ -21,20 +21,58 @@ class UserEventSubscriber implements EventSubscriberInterface{
 	 */
 	protected $container;
 
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	protected $entityManager;
+
 	public function __construct(ContainerInterface $container) {
 		$this->container = $container;
+		$this->entityManager = $this->container->get('doctrine.orm.default_entity_manager');
 	}
 
 	public static function getSubscribedEvents() {
 		return array(
 			UserEvents::USER_ADD => 'onUserAdd',
+			UserEvents::USER_EDIT => 'onUserEdit',
+			UserEvents::USER_DELETE => 'onUserDelete',
 		);
+	}
+
+	public function persistUser($user){
+
+		$this->entityManager->persist($user);
+
+		$isPersisted = $this->entityManager->contains($user);
+
+		$this->entityManager->flush();
+
+		return $isPersisted;
+
 	}
 	
 	
 	public function onUserAdd(UserEvent $userEvent){
 
 		$user = $userEvent->getUser();
+
+		$this->persistUser($user);
+
+	}
+
+	public function onUserEdit(UserEvent $userEvent){
+
+		$user = $userEvent->getUser();
+
+		$this->persistUser($user);
+
+	}
+
+	public function onUserDelete(UserEvent $userEvent){
+
+		$user = $userEvent->getUser();
+
+		$this->persistUser($user);
 
 	}
 	

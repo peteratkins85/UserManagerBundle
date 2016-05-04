@@ -6,6 +6,7 @@ use Oni\CoreBundle\Controller\CoreController;
 use Oni\UserManagerBundle\Entity\Repository\UserRepository;
 use Oni\UserManagerBundle\Entity\User;
 use Oni\UserManagerBundle\Event\NewUserAddEvent;
+use Oni\UserManagerBundle\Event\UserEvent;
 use Oni\UserManagerBundle\Form\UserType;
 use Oni\UserManagerBundle\UserEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -53,13 +54,7 @@ class UserController extends CoreController
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
 
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($user);
-
-                $em->flush();
-
-                $em->refresh($user);
+                $this->get('oni_event_dispatcher')->dispatch(UserEvents::USER_ADD, new UserEvent($user));
 
                 $this->addFlash('notice',$this->translator->trans('oni_user_bundle.user_added_successfully'));
 
@@ -86,7 +81,6 @@ class UserController extends CoreController
     {
 
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access!');
-
         $user = $this->usersRepository->find($userId);
 
         $userForm = $this->createForm(UserType::class,$user);
@@ -97,16 +91,7 @@ class UserController extends CoreController
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
 
-                $this->get('debug.event_dispatcher')->dispatch();
-
-
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($user);
-
-                $em->flush();
-
-                $em->refresh($user);
+                $this->get('oni_event_dispatcher')->dispatch(UserEvents::USER_EDIT, new UserEvent($user));
 
                 $this->addFlash('notice',$this->translator->trans('oni_user_bundle.user_update_successfully'));
 

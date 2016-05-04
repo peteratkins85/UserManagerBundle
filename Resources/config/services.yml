@@ -50,7 +50,7 @@ services:
             - '' # Provider-shared Key
             - '@security.encoder_factory'
         public: false
-    oni_user_event_subscriber:
+    oni_auth_event_subscriber:
         class: Oni\UserManagerBundle\EventListeners\AuthEventSubscriber
         arguments: ["@service_container"]
         tags:
