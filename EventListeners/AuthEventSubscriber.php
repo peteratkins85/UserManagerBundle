@@ -3,12 +3,12 @@ namespace Oni\UserManagerBundle\EventListeners;
 
 use Oni\CoreBundle\SessionKeys;
 use Doctrine\ORM\EntityManager;
+use Oni\UserManagerBundle\Entity\User;
 use Oni\UserManagerBundle\Event\NewUserAddEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Oni\UserManagerBundle\Entity\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Oni\UserManagerBundle\UserEvents;
 
 class AuthEventSubscriber implements EventSubscriberInterface
 {
@@ -43,21 +43,27 @@ class AuthEventSubscriber implements EventSubscriberInterface
 
         $token = $event->getAuthenticationToken();
         $user = $token->getUser();
-        $session = $this->container->get('session');
-        $languageRepository = $this->container->get('oni_language_repository');
-        $language = $languageRepository->getDefaultLanguage();
+        
+        if ($user instanceof User) {
+            
+            $session = $this->container->get( 'session' );
+            $languageRepository = $this->container->get( 'oni_language_repository' );
+            $language = $languageRepository->getDefaultLanguage();
 
-        if ($language) {
-            $session->set(SessionKeys::LOCALE_KEY, $language->getLocale());
-        }
+            if ( $language ) {
+                $session->set( SessionKeys::LOCALE_KEY,
+                    $language->getLocale() );
+            }
 
-        if ($user instanceof UserInterface){
+            if ( $user instanceof UserInterface ) {
 
-            $now = new \DateTime();
-            $user->setLastlogin($now);
-            $user->setLoggedInn($user->getLoggedInn()+1);
-            $this->em->flush();
+                $now = new \DateTime();
+                $user->setLastlogin( $now );
+                $user->setLoggedInn( $user->getLoggedInn() + 1 );
+                $this->em->flush();
 
+            }
+            
         }
 
     }

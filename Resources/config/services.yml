@@ -18,7 +18,7 @@ services:
     # Controllers
     oni_users_controller:
         class: Oni\UserManagerBundle\Controller\UserController
-        factory: [ '@oni_user_controller_factory', getController]
+        factory: [ '@oni_user_controller_factory', getService]
         arguments:
             - '@service_container'
     #Repositories
@@ -40,7 +40,6 @@ services:
             - '@service_container'
         tags:
             - { name: form.type, alias: oni_admin_user }
-
     #Authenticaion & Security
     oni_user.security.authentication.provider:
         class: Oni\UserManagerBundle\Security\Authentication\Provider\AuthenticationProvider
@@ -57,7 +56,11 @@ services:
            - { name: kernel.event_subscriber }
     oni_user_event_subscriber:
         class: Oni\UserManagerBundle\EventListeners\UserEventSubscriber
-        arguments: ["@service_container"]
+        arguments:
+            - "@service_container"
+            - "@oni_event_dispatcher"
+            - "@doctrine.orm.default_entity_manager"
+            - "@oni_flash_message_service"
         tags:
           - { name: oni.event_subscriber }
 

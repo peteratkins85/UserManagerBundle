@@ -8,6 +8,7 @@ use Oni\UserManagerBundle\Entity\User;
 use Oni\UserManagerBundle\Event\NewUserAddEvent;
 use Oni\UserManagerBundle\Event\UserEvent;
 use Oni\UserManagerBundle\Form\UserType;
+use Oni\UserManagerBundle\Service\UserServiceInterface;
 use Oni\UserManagerBundle\UserEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,17 +20,24 @@ class UserController extends CoreController
      */
     private $usersRepository;
 
-    public function __construct(UserRepository $userRepository) {
+    /**
+     * @var \Oni\UserManagerBundle\Controller\UserService
+     */
+    private $userService;
 
-        $this->usersRepository = $userRepository;
+    public function __construct(
+        UserServiceInterface $userService
+    ) {
+
+        $this->userService = $userService;
 
     }
 
 
     public function indexAction()
     {
-
-        $users = $this->usersRepository->getAllUsersAsArray();
+        
+        $users = $this->userService->findAll();
 
         return $this->render('UserManagerBundle:User:index.html.twig',
             array(
@@ -55,8 +63,6 @@ class UserController extends CoreController
             if ($userForm->isSubmitted() && $userForm->isValid()) {
 
                 $this->get('oni_event_dispatcher')->dispatch(UserEvents::USER_ADD, new UserEvent($user));
-
-                $this->addFlash('notice',$this->translator->trans('oni_user_bundle.user_added_successfully'));
 
                 return $this->redirectToRoute('oni_user_list');
 
@@ -93,8 +99,6 @@ class UserController extends CoreController
 
                 $this->get('oni_event_dispatcher')->dispatch(UserEvents::USER_EDIT, new UserEvent($user));
 
-                $this->addFlash('notice',$this->translator->trans('oni_user_bundle.user_update_successfully'));
-
                 return $this->redirectToRoute('oni_user_list');
 
             }else{
@@ -117,11 +121,7 @@ class UserController extends CoreController
     public function deleteAction($userId, Request $request)
     {
 
-        return $this->render('UserManagerBundle:User:edit.html.twig',
-            array(
-                'users' => $users
-            )
-        );
+        return $this->render('UserManagerBundle:User:edit.html.twig');
 
     }
 

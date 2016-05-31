@@ -17,4 +17,6 @@ interface UserServiceInterface {
 
 	public function getEntityClass();
 
+	public function findAll();
+
 }

@@ -9,10 +9,14 @@
 namespace Oni\UserManagerBundle\EventListeners;
 
 
+use Doctrine\ORM\EntityManager;
+use Oni\CoreBundle\Service\FlashMessageService;
 use Oni\UserManagerBundle\Event\UserEvent;
 use Oni\UserManagerBundle\UserEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserEventSubscriber implements EventSubscriberInterface{
 
@@ -26,12 +30,28 @@ class UserEventSubscriber implements EventSubscriberInterface{
 	 */
 	protected $entityManager;
 
-	public function __construct(ContainerInterface $container) {
-		$this->container = $container;
-		$this->entityManager = $this->container->get('doctrine.orm.default_entity_manager');
+	/**
+	 * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+	 */
+	protected $eventDispatcher;
+
+	/**
+	 * @var \Oni\CoreBundle\Service\FlashMessageService
+	 */
+	protected $flashMessageService;
+
+	public function __construct(ContainerInterface $container,
+		EventDispatcherInterface $eventDispatcher,
+		EntityManager $entityManager,
+		FlashMessageService $flashMessageService
+	) {
+		$this->entityManager = $entityManager;
+		$this->eventDispatcher = $eventDispatcher;
+		$this->flashMessageService = $flashMessageService;
 	}
 
-	public static function getSubscribedEvents() {
+	public static function getSubscribedEvents()
+	{
 		return array(
 			UserEvents::USER_ADD => 'onUserAdd',
 			UserEvents::USER_EDIT => 'onUserEdit',
@@ -39,7 +59,8 @@ class UserEventSubscriber implements EventSubscriberInterface{
 		);
 	}
 
-	public function persistUser($user){
+	public function persistUser($user)
+	{
 
 		$this->entityManager->persist($user);
 
@@ -52,28 +73,44 @@ class UserEventSubscriber implements EventSubscriberInterface{
 	}
 	
 	
-	public function onUserAdd(UserEvent $userEvent){
+	public function onUserAdd(UserEvent $userEvent)
+	{
 
 		$user = $userEvent->getUser();
 
-		$this->persistUser($user);
+		if ($this->persistUser($user)){
+
+
+
+		}
 
 	}
 
-	public function onUserEdit(UserEvent $userEvent){
+	public function onUserEdit(UserEvent $userEvent)
+	{
 
 		$user = $userEvent->getUser();
 
-		$this->persistUser($user);
+		if ($this->persistUser($user)){
+
+			$this->flashMessageService->addFlash('notice', 'oni_user_bundle.user_added_successfully');
+
+		}
 
 	}
 
-	public function onUserDelete(UserEvent $userEvent){
+	public function onUserDelete(UserEvent $userEvent)
+	{
 
 		$user = $userEvent->getUser();
 
-		$this->persistUser($user);
+		if ($this->persistUser($user)){
+
+			$this->flashMessageService->addFlash('notice', 'oni_user_bundle.user_update_successfully');
+
+		}
 
 	}
-	
+
+
 }

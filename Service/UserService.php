@@ -8,42 +8,65 @@
 
 namespace Oni\UserManagerBundle\Service;
 
+
 use Oni\UserManagerBundle\Entity\Repository\GroupRepository;
 use Oni\UserManagerBundle\Entity\Repository\UserRepository;
 use Oni\UserManagerBundle\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Oni\CoreBundle\Doctrine\Spec\AsObject;
+use Oni\UserManagerBundle\Doctrine\Spec\FilterUsername;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class UserService implements UserServiceInterface{
 
+	/**
+	 * @var \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface
+	 */
 	protected $encoderFactory;
 
+	/**
+	 * @var \Doctrine\Common\Persistence\ObjectRepository
+	 */
 	protected $userRepository;
 
-	protected $groupRepository;
+	/**
+	 * @var string
+	 */
+	protected $class;
+
 
 
 	public function __construct(
 		EncoderFactoryInterface $encoderFactory,
-		UserRepository $userRepository,
-		GroupRepository $groupRepository
+		ObjectManager $objectManager,
+		$class
 	)
 	{
 
 		$this->encoderFactory = $encoderFactory;
-		$this->userRepository = $userRepository;
-		$this->groupRepository = $groupRepository;
+		$this->userRepository = $objectManager->getRepository($class);
+
+		$metadata = $objectManager->getClassMetadata($class);
+		$this->class = $metadata->getName();
+
 
 	}
 
 	public function findByUsername($username)
 	{
-		return $this->userRepository->findByUsername($username);
+		return $this->userRepository->findOneBy(array('username' => $username));
 	}
 
 
 	public function findUserBy( array $criteria )
 	{
 		return  $this->userRepository->findBy($criteria);
+	}
+
+	public function findAll(){
+
+		return  $this->userRepository->findAll();
+
 	}
 
 

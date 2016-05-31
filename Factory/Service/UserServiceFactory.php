@@ -19,13 +19,13 @@ class UserServiceFactory extends CoreAbstractFactory {
 	{
 
 		$encoderFactory = $serviceContainer->get('security.encoder_factory');
-		$userRepository = $serviceContainer->get('oni_user_repository');
-		$groupRepository = $serviceContainer->get('oni_groups_repository');
-		
+		$objectManager  = $serviceContainer->get('doctrine.orm.entity_manager');
+		$class = 'Oni\\UserManagerBundle\\Entity\\User';
+
 		$userService = new UserService(
 			$encoderFactory,
-			$userRepository,
-			$groupRepository
+			$objectManager,
+			$class
 		);
 
 		return $userService;

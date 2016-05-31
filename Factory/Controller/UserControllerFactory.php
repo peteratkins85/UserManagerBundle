@@ -8,14 +8,14 @@ use Symfony\Component\DependencyInjection\Container;
 
 class UserControllerFactory extends CoreAbstractFactory{
 
-	function getController(Container $serviceContainer){
+	function getService(Container $serviceContainer){
 
 		$this->setContainer($serviceContainer);
 
-		$userRepository = $this->container->get('oni_user_repository');
+		$userService = $this->container->get('oni_user_service');
 
 		$controller = new UserController(
-			$userRepository
+			$userService
 		);
 
 		$controller = $this->injectControllerDependencies($controller);

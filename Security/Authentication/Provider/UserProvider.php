@@ -54,7 +54,7 @@ class UserProvider implements UserProviderInterface
         }
 
         if (!$this->supportsClass(get_class($user))) {
-            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', $this->userManager->getClass(), get_class($user)));
+            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', $this->userService->getEntityClass(), get_class($user)));
         }
 
         if (null === $reloadedUser = $this->loadUserByUsername($user->getUsername())) {

@@ -4,6 +4,8 @@ namespace Oni\UserManagerBundle\Entity\Repository;
 
 use Oni\CoreBundle\CoreBundle;
 use Oni\CoreBundle\CoreGlobals;
+use Oni\CoreBundle\Doctrine\Spec\Specification;
+use Oni\CoreBundle\Doctrine\Specification\SpecificationInterface;
 use Oni\ProductManagerBundle\ProductEvents;
 use Doctrine\ORM\EntityRepository;
 
@@ -21,66 +23,16 @@ class UserRepository extends EntityRepository
 
     private $table = CoreGlobals::USERS_ENTITY;
 
-    public function findByUsername($username){
 
-        if (empty($username)){ return false; }
+    function match(Specification $specification){
 
-        $qb = $this->getEntityManager()->createQueryBuilder()
-            ->select('u')
-            ->from($this->table, 'u')
-            ->where('u.username = :username')
-            ->setParameter('username', $username)
-            ->setMaxResults(1);
-
-        $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-        //expecting only one result so set the result to the first array element
-        $results = isset($results[0]) ? $results[0] : false;
-
-        return $results;
-
-    }
-
-    /**
-     *
-     * Get all users with field titles
-     *
-     * @param bool $offset
-     * @param bool $maxResults
-     *
-     * @return array
-     */
-    public function getAllUsersAsArray($offset = false, $maxResults = false){
-
+        $qb = $this->createQueryBuilder('u');
+        $expr = $specification->match($qb, 'u');
+        //var_dump($expr);exit;
+        $query = $qb->where($expr)->getQuery();
+        $specification->modifyQuery($query);
+        return $query->getResult();
         
-        $results = array();
-
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder()
-                   ->select('u')
-                   ->from($this->table, 'u');
-
-        if ($offset > 0){
-            $queryBuilder->setFirstResult($offset);
-        }
-        If ($maxResults > 0){
-            $queryBuilder->setMaxResults($maxResults);
-        }
-
-        $query = $queryBuilder->getQuery();
-
-        $query->setHint(
-            \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );
-
-        $query->setHint(\Gedmo\Translatable\TranslatableListener::HINT_FALLBACK, 1);
-
-        //$results = new Paginator($query, $fetchJoinCollection = true);
-
-        $results = $query->getResult();
-
-
-        return $results;
-
     }
 
 }
