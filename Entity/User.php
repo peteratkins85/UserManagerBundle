@@ -3,7 +3,6 @@
 namespace Oni\UserManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\GroupInterface;
 use Oni\UserManagerBundle\Entity\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -395,7 +394,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeGroup(GroupInterface $group)
+    public function removeGroup( $group)
     {
         if ($this->getGroups()->contains($group)) {
             $this->getGroups()->removeElement($group);

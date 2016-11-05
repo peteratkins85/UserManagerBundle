@@ -4,11 +4,11 @@ namespace Oni\UserManagerBundle\Factory\Controller;
 
 use Oni\CoreBundle\Factory\CoreAbstractFactory;
 use Oni\UserManagerBundle\Controller\UserController;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UserControllerFactory extends CoreAbstractFactory{
 
-	function getService(Container $serviceContainer){
+	function getService(ContainerInterface $serviceContainer){
 
 		$this->setContainer($serviceContainer);
 
