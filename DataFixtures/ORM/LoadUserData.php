@@ -6,7 +6,7 @@
  * Time: 19:42
  */
 
-namespace Oni\ProductManagerBundle\DataFixtures\ORM;
+namespace Oni\UserManagerBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
