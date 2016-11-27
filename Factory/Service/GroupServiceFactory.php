@@ -4,10 +4,11 @@ namespace Oni\UserManagerBundle\Factory\Service;
 
 
 use Oni\CoreBundle\Factory\CoreAbstractFactory;
+use Oni\UserManagerBundle\Service\GroupService;
 use Oni\UserManagerBundle\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class UserServiceFactory extends CoreAbstractFactory {
+class GroupServiceFactory extends CoreAbstractFactory {
 
     /**
      * @param ContainerInterface $serviceContainer
@@ -18,15 +19,15 @@ class UserServiceFactory extends CoreAbstractFactory {
 
 		$encoderFactory = $serviceContainer->get('security.encoder_factory');
 		$objectManager  = $serviceContainer->get('doctrine.orm.entity_manager');
-		$class = 'Oni\\UserManagerBundle\\Entity\\User';
+		$class = 'Oni\\UserManagerBundle\\Entity\\Group';
 
-		$userService = new UserService(
+		$groupService = new GroupService(
 			$encoderFactory,
 			$objectManager,
 			$class
 		);
 
-		return $userService;
+		return $groupService;
 
 	}
 

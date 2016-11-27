@@ -6,7 +6,12 @@ services:
         class: Oni\UserManagerBundle\Entity\User
     oni_user_service:
         class: Oni\UserManagerBundle\Service\UserService
-        factory: [ '@oni_user_service_factory', getService]
+        factory: ['@oni_user_service_factory', getService]
+        arguments:
+            - '@service_container'
+    oni_user_groups_service:
+        class: Oni\UserManagerBundle\Service\GroupService
+        factory: ['@oni_user_group_service_factory', getService]
         arguments:
             - '@service_container'
     oni_user_provider:
@@ -21,21 +26,10 @@ services:
         factory: [ '@oni_user_controller_factory', getService]
         arguments:
             - '@service_container'
-    #Repositories
-    oni_groups_repository:
-        class: Oni\UserManagerBundle\Entity\Repository\GroupRepository
-        factory: [ '@oni_repository_factory',  getRepository]
-        arguments:
-            - Oni\UserManagerBundle\Entity\Group
-    oni_user_repository:
-        class: Oni\UserManagerBundle\Entity\Repository\UserRepository
-        factory: [ '@oni_repository_factory',  getRepository]
-        arguments:
-            - Oni\UserManagerBundle\Entity\User
     # Forms
     oni_user_form:
         class: Oni\UserManagerBundle\Form\UserType
-        factory: [ '@oni_user_form_factory', getForm]
+        factory: [ '@oni_user_form_factory', getService]
         arguments:
             - '@service_container'
         tags:

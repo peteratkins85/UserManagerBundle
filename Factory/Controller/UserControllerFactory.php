@@ -10,15 +10,14 @@ class UserControllerFactory extends CoreAbstractFactory{
 
 	function getService(ContainerInterface $serviceContainer){
 
-		$this->setContainer($serviceContainer);
 
-		$userService = $this->container->get('oni_user_service');
+		$userService = $serviceContainer->get('oni_user_service');
 
 		$controller = new UserController(
 			$userService
 		);
 
-		$controller = $this->injectControllerDependencies($controller);
+        $this->injectCommonDependencies($controller, $serviceContainer);
 
 		return $controller;
 

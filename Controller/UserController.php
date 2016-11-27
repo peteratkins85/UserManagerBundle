@@ -16,11 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends CoreController
 {
     /**
-     * @var \Oni\UserManagerBundle\Entity\Repository\UserRepository
-     */
-    private $usersRepository;
-
-    /**
      * @var \Oni\UserManagerBundle\Controller\UserService
      */
     private $userService;
@@ -87,7 +82,7 @@ class UserController extends CoreController
     {
 
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access!');
-        $user = $this->usersRepository->find($userId);
+        $user = $this->userService->findById($userId);
 
         $userForm = $this->createForm(UserType::class,$user);
 
