@@ -45,7 +45,10 @@ services:
         public: false
     oni_auth_event_subscriber:
         class: Oni\UserManagerBundle\EventListeners\AuthEventSubscriber
-        arguments: ["@service_container"]
+        arguments:
+            - "@session"
+            - "@doctrine.orm.default_entity_manager"
+            - "@oni_language_repository"
         tags:
            - { name: kernel.event_subscriber }
     oni_user_event_subscriber:

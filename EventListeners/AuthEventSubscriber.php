@@ -1,6 +1,7 @@
 <?php
 namespace Oni\UserManagerBundle\EventListeners;
 
+use Oni\CoreBundle\Entity\Repository\LanguagesRepository;
 use Oni\CoreBundle\SessionKeys;
 use Doctrine\ORM\EntityManager;
 use Oni\UserManagerBundle\Entity\User;
@@ -8,7 +9,7 @@ use Oni\UserManagerBundle\Event\NewUserAddEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Oni\UserManagerBundle\Entity\UserInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthEventSubscriber implements EventSubscriberInterface
 {
@@ -19,16 +20,24 @@ class AuthEventSubscriber implements EventSubscriberInterface
     private $container;
 
     /**
-     * UserEventSubscriber constructor.
-     * @param EntityManager $entityManager
+     * @var LanguagesRepository
+     */
+    protected $languageRepository;
+
+    /**
+     * AuthEventSubscriber constructor.
+     * @param Session $session
+     * @param $entityManager
+     * @param LanguagesRepository $languagesRepository
      */
     public function __construct(
-        ContainerInterface $container
+        Session $session,
+        $entityManager,
+        LanguagesRepository $languagesRepository
     ){
-
-        $this->container = $container;
-        $this->em = $container->get('doctrine.orm.default_entity_manager');
-        
+        $this->session = $session;
+        $this->em = $entityManager;
+        $this->languageRepository = $languagesRepository;
     }
 
     public static function getSubscribedEvents()
@@ -45,13 +54,12 @@ class AuthEventSubscriber implements EventSubscriberInterface
         $user = $token->getUser();
         
         if ($user instanceof User) {
-            
-            $session = $this->container->get( 'session' );
-            $languageRepository = $this->container->get( 'oni_language_repository' );
-            $language = $languageRepository->getDefaultLanguage();
+
+
+            $language = $this->languageRepository->getDefaultLanguage();
 
             if ( $language ) {
-                $session->set( SessionKeys::LOCALE_KEY,
+                $this->session->set( SessionKeys::LOCALE_KEY,
                     $language->getLocale() );
             }
 
@@ -65,13 +73,6 @@ class AuthEventSubscriber implements EventSubscriberInterface
             }
             
         }
-
-    }
-
-    public function onUserAdd(NewUserAddEvent $event)
-    {
-
-
 
     }
 
