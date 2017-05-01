@@ -36,14 +36,6 @@ class Group
      */
     private $roles;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="accessLevel", type="integer")
-     */
-    private $accessLevel;
-
-
 
     /**
      * Get id
@@ -104,29 +96,6 @@ class Group
     }
 
 
-    /**
-     * Set roles
-     *
-     * @param array $accessLevel
-     *
-     * @return Group
-     */
-    public function setAccessLevel($accessLevel)
-    {
-        $this->accessLevel = $accessLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get roles
-     *
-     * @return array
-     */
-    public function getAccessLevel()
-    {
-        return $this->accessLevel;
-    }
 
 
 }

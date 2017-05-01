@@ -40,14 +40,6 @@
                                                             <td>{{ user.email }} </td>
                                                             <td>
                                                                 <div class='text-right'>
-                                                                    {#<a class='btn {% if user.enabled %} btn-danger {% else %} btn-success {% endif %} btn-mini' href='{{ path('oni_user_ajax', {'userId':user.id }) }}'>#}
-                                                                        {#<i class='icon-edit'></i>#}
-                                                                        {#{%  if user.enabled %}#}
-                                                                            {#{{ 'disable'|trans }}#}
-                                                                        {#{% elseif not user.enabled %}#}
-                                                                            {#{{ 'enable'|trans }}#}
-                                                                        {#{% endif %}#}
-                                                                    {#</a>#}
                                                                     <a class='btn btn-default btn-mini' href='{{ path('oni_user_edit', {'userId':user.id }) }}'>
                                                                         <i class='icon-edit'></i>
                                                                         {{ 'edit'|trans }}

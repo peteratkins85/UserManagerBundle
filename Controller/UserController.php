@@ -15,14 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends CoreController
 {
+
     /**
      * @var \Oni\UserManagerBundle\Controller\UserService
      */
     private $userService;
 
-    public function __construct(
-        UserServiceInterface $userService
-    ) {
+    public function __construct(UserServiceInterface $userService)
+    {
 
         $this->userService = $userService;
 
@@ -44,8 +44,6 @@ class UserController extends CoreController
     
     public function addAction(Request $request)
     {
-
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access!');
 
         $user = $this->get('oni_user_entity');
 
@@ -80,8 +78,6 @@ class UserController extends CoreController
 
     public function editAction($userId, Request $request)
     {
-
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access!');
         $user = $this->userService->findById($userId);
 
         $userForm = $this->createForm(UserType::class,$user);

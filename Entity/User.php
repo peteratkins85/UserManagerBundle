@@ -15,8 +15,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class User implements UserInterface
 {
 
-    const ROLE_DEFAULT = 'ROLE_USER';
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    const ROLE_DEFAULT = 'ROLE_ONI_GUEST';
+    const ROLE_SUPER_ADMIN = 'ROLE_ONI_SUPER_ADMIN';
 
     /**
      * @var integer
@@ -51,7 +51,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string")
+     * @ORM\Column(name="password2", type="string")
      */
     private $password;
 
@@ -385,6 +385,10 @@ class User implements UserInterface
         return in_array($name, $this->getGroupNames());
     }
 
+    /**
+     * @param Group $group
+     * @return $this
+     */
     public function addGroup(Group $group)
     {
         if (!$this->getGroups()->contains($group)) {
