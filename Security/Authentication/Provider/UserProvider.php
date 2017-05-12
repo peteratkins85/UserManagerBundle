@@ -3,24 +3,26 @@
 namespace Oni\UserManagerBundle\Security\Authentication\Provider;
 
 
+use Oni\UserManagerBundle\Service\UserServiceInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Oni\UserManagerBundle\Entity\User;
-use Oni\UserManagerBundle\Entity\Repository\UserRepository;
 
 
 class UserProvider implements UserProviderInterface
 {
 
-    protected $userRepository;
-    protected $doctrine;
+    /**
+     * @var \Oni\UserManagerBundle\Service\UserServiceInterface
+     */
+    protected $userService;
 
-    public function __construct(UserRepository $userRepository, $doctrine){
 
-        $this->userRepository = $userRepository;
-        $this->doctrine = $doctrine;
+    public function __construct(UserServiceInterface $userService){
+
+        $this->userService = $userService;
 
     }
 
@@ -29,7 +31,7 @@ class UserProvider implements UserProviderInterface
 
         if ($username) {
 
-            $user = $this->userRepository->getUserByUsername($username);
+            $user = $this->userService->findByUsername($username);
 
         }
 
@@ -37,7 +39,7 @@ class UserProvider implements UserProviderInterface
             throw new UsernameNotFoundException(
                 sprintf('Username "%s" does not exist.', $username)
             );
-        }else {
+        } else {
 
             return $user;
 
@@ -47,17 +49,24 @@ class UserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof User) {
-            throw new UnsupportedUserException(
-                sprintf('Instances of "%s" are not supported.', get_class($user))
-            );
+        if (!$user instanceof UserInterface) {
+            throw new UnsupportedUserException(sprintf('Expected an instance of FOS\UserBundle\Model\UserInterface, but got "%s".', get_class($user)));
         }
 
-        return $this->loadUserByUsername($user->getUsername());
+        if (!$this->supportsClass(get_class($user))) {
+            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', $this->userService->getEntityClass(), get_class($user)));
+        }
+
+        if (null === $reloadedUser = $this->loadUserByUsername($user->getUsername())) {
+            throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
+        }
+
+        return $reloadedUser;
     }
+
 
     public function supportsClass($class)
     {
-        return $class === 'Oni\UserManagerBundle\Entity\User';
+        return $class === $this->userService->getEntityClass();
     }
 }

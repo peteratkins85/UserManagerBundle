@@ -1,63 +1,116 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: peteratkins
+ * Date: 02/05/2016
+ * Time: 22:32
+ */
+
 namespace Oni\UserManagerBundle\EventListeners;
 
-use Oni\CoreBundle\SessionKeys;
+
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Oni\CoreBundle\Service\FlashMessageService;
+use Oni\UserManagerBundle\Event\UserEvent;
+use Oni\UserManagerBundle\UserEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-class UserEventSubscriber implements EventSubscriberInterface
-{
+class UserEventSubscriber implements EventSubscriberInterface{
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    private $container;
+	/**
+	 * @var \Symfony\Component\DependencyInjection\ContainerInterface
+	 */
+	protected $container;
 
-    /**
-     * UserEventSubscriber constructor.
-     * @param EntityManager $entityManager
-     */
-    public function __construct(
-        EntityManager $entityManager,
-        ContainerInterface $container
-    ){
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	protected $entityManager;
 
-        $this->em = $entityManager;
-        $this->container = $container;
+	/**
+	 * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+	 */
+	protected $eventDispatcher;
 
-    }
+	/**
+	 * @var \Oni\CoreBundle\Service\FlashMessageService
+	 */
+	protected $flashMessageService;
 
-    public static function getSubscribedEvents()
-    {
-        return array(
-            'security.interactive_login' => 'onLoginSuccess'
-        );
-    }
+	public function __construct(ContainerInterface $container,
+		EventDispatcherInterface $eventDispatcher,
+		EntityManager $entityManager,
+		FlashMessageService $flashMessageService
+	) {
+		$this->entityManager = $entityManager;
+		$this->eventDispatcher = $eventDispatcher;
+		$this->flashMessageService = $flashMessageService;
+	}
 
-    public function onLoginSuccess(Event $event)
-    {
+	public static function getSubscribedEvents()
+	{
+		return array(
+			UserEvents::USER_ADD => 'onUserAdd',
+			UserEvents::USER_EDIT => 'onUserEdit',
+			UserEvents::USER_DELETE => 'onUserDelete',
+		);
+	}
 
-        $token = $event->getAuthenticationToken();
-        $user = $token->getUser();
-        $session = $this->container->get('session');
-        $languageRepository = $this->container->get('oni_language_repository');
-        $language = $languageRepository->getDefaultLanguage();
+	public function persistUser($user)
+	{
 
-        if ($language) {
-            $session->set(SessionKeys::LOCALE_KEY, $language->getLocale());
-        }
+		$this->entityManager->persist($user);
 
-        if ($user instanceof UserInterface){
+		$isPersisted = $this->entityManager->contains($user);
 
-            $now = new \DateTime();
-            $user->setLastlogin($now);
-            $user->setLoggedInn($user->getLoggedInn()+1);
-            $this->em->flush();
+		$this->entityManager->flush();
 
-        }
+		return $isPersisted;
 
-    }
+	}
+	
+	
+	public function onUserAdd(UserEvent $userEvent)
+	{
+
+		$user = $userEvent->getUser();
+
+		if ($this->persistUser($user)){
+
+
+
+		}
+
+	}
+
+	public function onUserEdit(UserEvent $userEvent)
+	{
+
+		$user = $userEvent->getUser();
+
+		if ($this->persistUser($user)){
+
+			$this->flashMessageService->addFlash('notice', 'oni_user_bundle.user_added_successfully');
+
+		}
+
+	}
+
+	public function onUserDelete(UserEvent $userEvent)
+	{
+
+		$user = $userEvent->getUser();
+
+		if ($this->persistUser($user)){
+
+			$this->flashMessageService->addFlash('notice', 'oni_user_bundle.user_update_successfully');
+
+		}
+
+	}
+
+
 }

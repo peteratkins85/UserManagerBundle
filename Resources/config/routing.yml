@@ -1,9 +1,35 @@
-cms_login:
+oni_cms_login:
     path:      /admin/login
     defaults:  { _controller: UserManagerBundle:Security:login}
-cms_login_check:
+oni_cms_login_check:
     path:      /admin/login_check
     defaults:  { _controller: UserManagerBundle:Security:check}
-cms_login_out:
+oni_cms_login_out:
     path:      /admin/logout
     defaults:  { _controller: UserManagerBundle:Security:logout}
+
+oni_user_list:
+    path: /admin/users
+    defaults: { _controller: oni_users_controller:indexAction}
+
+oni_user_add:
+    path: /admin/users/add
+    defaults: { _controller: oni_users_controller:addAction}
+
+oni_user_ajax:
+    path: /admin/users/ajax
+    defaults: { _controller: oni_users_controller:ajaxAction}
+
+oni_user_edit:
+    path: /admin/users/edit/{userId}
+    defaults: { _controller: oni_users_controller:editAction}
+    requirements:
+                userId:  \d+
+
+oni_user_delete:
+    path: /admin/users/delete/{userId}
+    defaults: { _controller: oni_users_controller:deleteAction}
+    requirements:
+                userId:  \d+
+
+

@@ -1,0 +1,17 @@
+{
+  "name": "oni-sys/user-manager-bundle",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Peter Atkins",
+      "email": "peter.atkins85@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Oni\\UserManagerBundle\\": ""
+    }
+  },
+  "require": {}
+}
