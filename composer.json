@@ -1,6 +1,6 @@
 {
   "name": "oni-sys/user-manager-bundle",
-  "type": "symfony-bundle",
+  "type": "project",
   "license": "MIT",
   "authors": [
     {
