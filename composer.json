@@ -1,6 +1,6 @@
 {
   "name": "oni-sys/user-manager-bundle",
-  "type": "project",
+  "type": "oni-bundle",
   "license": "MIT",
   "authors": [
     {
