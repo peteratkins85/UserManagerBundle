@@ -1,9 +1,9 @@
 <?php
 
-namespace Oni\UserManagerBundle\Factory\Controller;
+namespace App\Oni\UserManagerBundle\Factory\Controller;
 
-use Oni\CoreBundle\Factory\CoreAbstractFactory;
-use Oni\UserManagerBundle\Controller\UserController;
+use App\Oni\CoreBundle\Factory\CoreAbstractFactory;
+use App\Oni\UserManagerBundle\Controller\UserController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UserControllerFactory extends CoreAbstractFactory{

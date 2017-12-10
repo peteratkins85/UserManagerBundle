@@ -6,7 +6,7 @@
  * Time: 08:27
  */
 
-namespace Oni\UserManagerBundle\Tests;
+namespace App\Oni\UserManagerBundle\Tests;
 
 
 use Symfony\Component\BrowserKit\Cookie;

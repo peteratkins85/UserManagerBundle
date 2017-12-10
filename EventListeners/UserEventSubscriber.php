@@ -6,13 +6,13 @@
  * Time: 22:32
  */
 
-namespace Oni\UserManagerBundle\EventListeners;
+namespace App\Oni\UserManagerBundle\EventListeners;
 
 
 use Doctrine\ORM\EntityManager;
-use Oni\CoreBundle\Service\FlashMessageService;
-use Oni\UserManagerBundle\Event\UserEvent;
-use Oni\UserManagerBundle\UserEvents;
+use App\Oni\CoreBundle\Service\FlashMessageService;
+use App\Oni\UserManagerBundle\Event\UserEvent;
+use App\Oni\UserManagerBundle\UserEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -36,7 +36,7 @@ class UserEventSubscriber implements EventSubscriberInterface{
 	protected $eventDispatcher;
 
 	/**
-	 * @var \Oni\CoreBundle\Service\FlashMessageService
+	 * @var \App\Oni\CoreBundle\Service\FlashMessageService
 	 */
 	protected $flashMessageService;
 

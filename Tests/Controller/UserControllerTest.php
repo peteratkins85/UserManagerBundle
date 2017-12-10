@@ -1,11 +1,11 @@
 <?php
 
-namespace Oni\UserManagerBundle\Tests\Controller;
+namespace App\Oni\UserManagerBundle\Tests\Controller;
 
 
 
-use Oni\CoreBundle\Tests\CoreTestCase;
-use Oni\UserManagerBundle\Tests\UserTestCase;
+use App\Oni\CoreBundle\Tests\CoreTestCase;
+use App\Oni\UserManagerBundle\Tests\UserTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase{

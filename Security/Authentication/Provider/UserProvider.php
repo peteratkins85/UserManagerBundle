@@ -1,21 +1,21 @@
 <?php
 
-namespace Oni\UserManagerBundle\Security\Authentication\Provider;
+namespace App\Oni\UserManagerBundle\Security\Authentication\Provider;
 
 
-use Oni\UserManagerBundle\Service\UserServiceInterface;
+use App\Oni\UserManagerBundle\Service\UserServiceInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Oni\UserManagerBundle\Entity\User;
+use App\Oni\UserManagerBundle\Entity\User;
 
 
 class UserProvider implements UserProviderInterface
 {
 
     /**
-     * @var \Oni\UserManagerBundle\Service\UserServiceInterface
+     * @var \App\Oni\UserManagerBundle\Service\UserServiceInterface
      */
     protected $userService;
 

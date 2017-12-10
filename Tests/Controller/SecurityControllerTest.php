@@ -2,7 +2,7 @@
 
 namespace Tests\UserManagerBundle\Controller;
 
-use Oni\CoreBundle\Tests\CoreTestCase;
+use App\Oni\CoreBundle\Tests\CoreTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;

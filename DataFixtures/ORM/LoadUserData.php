@@ -6,20 +6,20 @@
  * Time: 19:42
  */
 
-namespace Oni\UserManagerBundle\DataFixtures\ORM;
+namespace App\Oni\UserManagerBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Oni\UserManagerBundle\Entity\User;
+use App\Oni\UserManagerBundle\Entity\User;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
-use Oni\UserManagerBundle\Entity\Group;
+use App\Oni\UserManagerBundle\Entity\Group;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, FixtureInterface, ContainerAwareInterface
 {

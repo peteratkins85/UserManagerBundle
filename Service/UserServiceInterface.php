@@ -6,7 +6,7 @@
  * Time: 21:54
  */
 
-namespace Oni\UserManagerBundle\Service;
+namespace App\Oni\UserManagerBundle\Service;
 
 
 interface UserServiceInterface {

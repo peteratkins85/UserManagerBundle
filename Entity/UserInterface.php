@@ -1,6 +1,6 @@
 <?php
 
-namespace Oni\UserManagerBundle\Entity;
+namespace App\Oni\UserManagerBundle\Entity;
 
 
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;

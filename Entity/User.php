@@ -1,9 +1,9 @@
 <?php
 
-namespace Oni\UserManagerBundle\Entity;
+namespace App\Oni\UserManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Oni\UserManagerBundle\Entity\UserInterface;
+use App\Oni\UserManagerBundle\Entity\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

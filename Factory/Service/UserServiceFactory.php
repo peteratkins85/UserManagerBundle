@@ -1,10 +1,10 @@
 <?php
 
-namespace Oni\UserManagerBundle\Factory\Service;
+namespace App\Oni\UserManagerBundle\Factory\Service;
 
 
-use Oni\CoreBundle\Factory\CoreAbstractFactory;
-use Oni\UserManagerBundle\Service\UserService;
+use App\Oni\CoreBundle\Factory\CoreAbstractFactory;
+use App\Oni\UserManagerBundle\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UserServiceFactory extends CoreAbstractFactory {

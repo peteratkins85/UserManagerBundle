@@ -1,6 +1,6 @@
 <?php
 
-namespace Oni\UserManagerBundle\Entity;
+namespace App\Oni\UserManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;

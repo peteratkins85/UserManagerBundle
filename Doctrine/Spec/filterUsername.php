@@ -6,10 +6,10 @@
  * Time: 12:08
  */
 
-namespace Oni\UserManagerBundle\Doctrine\Spec;
+namespace App\Oni\UserManagerBundle\Doctrine\Spec;
 
 
-use Oni\CoreBundle\Doctrine\Spec\Specification;
+use App\Oni\CoreBundle\Doctrine\Spec\Specification;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 

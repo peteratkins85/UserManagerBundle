@@ -1,9 +1,9 @@
 <?php
 
-namespace Oni\UserManagerBundle;
+namespace App\Oni\UserManagerBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Oni\UserManagerBundle\Security\UserSecurityFactory;
+use App\Oni\UserManagerBundle\Security\UserSecurityFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 

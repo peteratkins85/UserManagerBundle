@@ -6,7 +6,7 @@
  * Time: 18:59
  */
 
-namespace Oni\UserManagerBundle;
+namespace App\Oni\UserManagerBundle;
 
 
 final class UserEvents {

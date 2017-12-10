@@ -1,6 +1,6 @@
 <?php
 
-namespace Oni\UserManagerBundle\Entity\Repository;
+namespace App\Oni\UserManagerBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
