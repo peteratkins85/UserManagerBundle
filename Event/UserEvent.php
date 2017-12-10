@@ -6,11 +6,11 @@
  * Time: 11:32
  */
 
-namespace App\Oni\UserManagerBundle\Event;
+namespace Oni\UserManagerBundle\Event;
 
-use App\Oni\UserManagerBundle\Entity\UserInterface;
+use Oni\UserManagerBundle\Entity\UserInterface;
 
-use App\Oni\UserManagerBundle\UserEvents;
+use Oni\UserManagerBundle\UserEvents;
 use Symfony\Component\EventDispatcher\Event;
 
 class UserEvent extends Event {

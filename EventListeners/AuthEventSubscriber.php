@@ -1,14 +1,14 @@
 <?php
-namespace App\Oni\UserManagerBundle\EventListeners;
+namespace Oni\UserManagerBundle\EventListeners;
 
-use App\Oni\CoreBundle\Entity\Repository\LanguagesRepository;
-use App\Oni\CoreBundle\SessionKeys;
+use Oni\CoreBundle\Entity\Repository\LanguagesRepository;
+use Oni\CoreBundle\SessionKeys;
 use Doctrine\ORM\EntityManager;
-use App\Oni\UserManagerBundle\Entity\User;
-use App\Oni\UserManagerBundle\Event\NewUserAddEvent;
+use Oni\UserManagerBundle\Entity\User;
+use Oni\UserManagerBundle\Event\NewUserAddEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event;
-use App\Oni\UserManagerBundle\Entity\UserInterface;
+use Oni\UserManagerBundle\Entity\UserInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthEventSubscriber implements EventSubscriberInterface

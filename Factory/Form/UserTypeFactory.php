@@ -6,11 +6,11 @@
  * Time: 01:04
  */
 
-namespace App\Oni\UserManagerBundle\Factory\Form;
+namespace Oni\UserManagerBundle\Factory\Form;
 
 
-use App\Oni\CoreBundle\Factory\CoreAbstractFactory;
-use App\Oni\UserManagerBundle\Form\UserType;
+use Oni\CoreBundle\Factory\CoreAbstractFactory;
+use Oni\UserManagerBundle\Form\UserType;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

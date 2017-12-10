@@ -6,7 +6,7 @@
  * Time: 08:25
  */
 
-namespace App\Oni\UserManagerBundle\Service;
+namespace Oni\UserManagerBundle\Service;
 
 
 class GroupService {

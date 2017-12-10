@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Oni\UserManagerBundle\Entity\Repository;
+namespace Oni\UserManagerBundle\Entity\Repository;
 
-use App\Oni\CoreBundle\CoreBundle;
-use App\Oni\CoreBundle\CoreGlobals;
-use App\Oni\CoreBundle\Doctrine\Spec\Specification;
-use App\Oni\CoreBundle\Doctrine\Specification\SpecificationInterface;
-use App\Oni\ProductManagerBundle\ProductEvents;
+use Oni\CoreBundle\CoreBundle;
+use Oni\CoreBundle\CoreGlobals;
+use Oni\CoreBundle\Doctrine\Spec\Specification;
+use Oni\CoreBundle\Doctrine\Specification\SpecificationInterface;
+use Oni\ProductManagerBundle\ProductEvents;
 use Doctrine\ORM\EntityRepository;
 
 

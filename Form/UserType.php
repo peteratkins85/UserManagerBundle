@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Oni\UserManagerBundle\Form;
+namespace Oni\UserManagerBundle\Form;
 
-use App\Oni\UserManagerBundle\Entity\Repository\GroupRepository;
-use App\Oni\UserManagerBundle\Service\UserService;
+use Oni\UserManagerBundle\Entity\Repository\GroupRepository;
+use Oni\UserManagerBundle\Service\UserService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Form\AbstractType;
@@ -18,12 +18,12 @@ class UserType extends AbstractType
 {
 
     /**
-     * @var \App\Oni\UserManagerBundle\Entity\Repository\UserRepository
+     * @var \Oni\UserManagerBundle\Entity\Repository\UserRepository
      */
     protected $userService;
 
     /**
-     * @var \App\Oni\UserManagerBundle\Entity\Repository\GroupRepository
+     * @var \Oni\UserManagerBundle\Entity\Repository\GroupRepository
      */
     protected $groupRepository;
 

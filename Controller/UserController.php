@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Oni\UserManagerBundle\Controller;
+namespace Oni\UserManagerBundle\Controller;
 
-use App\Oni\CoreBundle\Controller\CoreController;
-use App\Oni\UserManagerBundle\Entity\Repository\UserRepository;
-use App\Oni\UserManagerBundle\Entity\User;
-use App\Oni\UserManagerBundle\Event\NewUserAddEvent;
-use App\Oni\UserManagerBundle\Event\UserEvent;
-use App\Oni\UserManagerBundle\Form\UserType;
-use App\Oni\UserManagerBundle\Service\UserServiceInterface;
-use App\Oni\UserManagerBundle\UserEvents;
+use Oni\CoreBundle\Controller\CoreController;
+use Oni\UserManagerBundle\Entity\Repository\UserRepository;
+use Oni\UserManagerBundle\Entity\User;
+use Oni\UserManagerBundle\Event\NewUserAddEvent;
+use Oni\UserManagerBundle\Event\UserEvent;
+use Oni\UserManagerBundle\Form\UserType;
+use Oni\UserManagerBundle\Service\UserServiceInterface;
+use Oni\UserManagerBundle\UserEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,7 +17,7 @@ class UserController extends CoreController
 {
 
     /**
-     * @var \App\Oni\UserManagerBundle\Controller\UserService
+     * @var \Oni\UserManagerBundle\Controller\UserService
      */
     private $userService;
 

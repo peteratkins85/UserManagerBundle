@@ -1,6 +1,6 @@
 <?php
 // src/Atks/CmsBundle/Form/User/Login.php
-namespace App\Oni\UserManagerBundle\Form\User;
+namespace Oni\UserManagerBundle\Form\User;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Oni\UserManagerBundle\Factory\Service;
+namespace Oni\UserManagerBundle\Factory\Service;
 
 
-use App\Oni\CoreBundle\Factory\CoreAbstractFactory;
-use App\Oni\UserManagerBundle\Service\GroupService;
-use App\Oni\UserManagerBundle\Service\UserService;
+use Oni\CoreBundle\Factory\CoreAbstractFactory;
+use Oni\UserManagerBundle\Service\GroupService;
+use Oni\UserManagerBundle\Service\UserService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GroupServiceFactory extends CoreAbstractFactory {

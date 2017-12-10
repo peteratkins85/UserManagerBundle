@@ -6,15 +6,15 @@
  * Time: 21:06
  */
 
-namespace App\Oni\UserManagerBundle\Service;
+namespace Oni\UserManagerBundle\Service;
 
 
-use App\Oni\UserManagerBundle\Entity\Repository\GroupRepository;
-use App\Oni\UserManagerBundle\Entity\Repository\UserRepository;
-use App\Oni\UserManagerBundle\Entity\User;
+use Oni\UserManagerBundle\Entity\Repository\GroupRepository;
+use Oni\UserManagerBundle\Entity\Repository\UserRepository;
+use Oni\UserManagerBundle\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use App\Oni\CoreBundle\Doctrine\Spec\AsObject;
-use App\Oni\UserManagerBundle\Doctrine\Spec\FilterUsername;
+use Oni\CoreBundle\Doctrine\Spec\AsObject;
+use Oni\UserManagerBundle\Doctrine\Spec\FilterUsername;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class UserService implements UserServiceInterface
