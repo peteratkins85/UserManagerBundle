@@ -1,9 +1,9 @@
 <?php
 
-namespace Oni\UserManagerBundle\Controller;
+namespace App\Oni\UserManagerBundle\Controller;
 
-use Oni\CoreBundle\Controller\CoreController;
-use Oni\ProductManagerBundle\ProductEvents;
+use App\Oni\CoreBundle\Controller\CoreController;
+use App\Oni\ProductManagerBundle\ProductEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

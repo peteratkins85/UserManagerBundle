@@ -1,14 +1,15 @@
 <?php
 
-namespace Oni\UserManagerBundle\Entity;
+namespace App\Oni\UserManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Group
  *
  * @ORM\Table(name="oni_user_groups")
- * @ORM\Entity(repositoryClass="Oni\UserManagerBundle\Entity\GroupsRepository")
+ * @ORM\Entity(repositoryClass="Oni\UserManagerBundle\Entity\Repository\GroupRepository")
  */
 class Group
 {
@@ -23,7 +24,7 @@ class Group
 
     /**
      * @var string
-     *
+     * @Gedmo\Translatable
      * @ORM\Column(name="name", type="string", length=50)
      */
     private $name;
@@ -34,7 +35,6 @@ class Group
      * @ORM\Column(name="roles", type="array")
      */
     private $roles;
-
 
 
     /**
@@ -94,4 +94,8 @@ class Group
     {
         return $this->roles;
     }
+
+
+
+
 }

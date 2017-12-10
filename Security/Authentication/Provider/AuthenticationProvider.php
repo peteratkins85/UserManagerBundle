@@ -1,5 +1,5 @@
 <?php
-namespace Oni\UserManagerBundle\Security\Authentication\Provider;
+namespace App\Oni\UserManagerBundle\Security\Authentication\Provider;
 
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;

@@ -1,0 +1,70 @@
+{# src/Atk/CmsBundle/Resources/views/security/login.html.twig #}
+{% extends 'CoreBundle:cms:base.html.twig' %}
+{% block stylesheets %}
+{% endblock %}
+{% block title %}
+    {{ 'travel_port_bundle.travel_port_users'|trans }}
+{% endblock %}
+{% block body %}
+    <section id='content'>
+        <div class='container-fluid'>
+            <div class='row-fluid' id='content-wrapper'>
+                <div class='span12'>
+                    {% embed 'CoreBundle:cms:content/content-header.html.twig' %}
+                        {% block contentTitle %} {{ 'travel_port_bundle.travel_port_users'|trans }} {% endblock %}
+                    {%  endembed %}
+                    <div class='row-fluid'>
+                        <div class="pull-right">
+                            <a class="btn btn-primary" style="margin-bottom:8px" href="" > <i class="icon-plus"></i>  </a>
+                        </div>
+                    </div>
+                    <div class='row-fluid'>
+                        <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+                            <div class='box-content box-no-padding'>
+                                <div class='responsive-table'>
+                                    <div class='scrollable-area'>
+                                        {%
+                                        set titles = {
+                                            0 : 'oni_user_bundle.username',
+                                            1 : 'oni_user_bundle.email'
+                                        }
+                                        %}
+                                        {% if titles is defined and users is defined %}
+                                        {% embed "CoreBundle:cms/table:data-table-column-filter.html.twig" with {'title': titles , 'edit_options':'true'}  %}
+                                            {% if users|length > 0 %}
+                                                {% block body %}
+                                                    <tbody>
+                                                    {% for user in users %}
+                                                        <tr>
+                                                            <td>{{ user.username }} </td>
+                                                            <td>{{ user.email }} </td>
+                                                            <td>
+                                                                <div class='text-right'>
+                                                                    <a class='btn btn-default btn-mini' href='{{ path('oni_user_edit', {'userId':user.id }) }}'>
+                                                                        <i class='icon-edit'></i>
+                                                                        {{ 'edit'|trans }}
+                                                                    </a>
+                                                                    <a class='btn btn-danger btn-mini oni-delete-action' data-toggle="modal" delete-msg="{{ 'modal-messages.delete.confirm.msg'|trans({'%name%': user.username , '%item%': 'product_bundle.product.category'|trans}) }}"  delete-url="{{ path('oni_user_delete', {'userId':user.id }) }}" href='#confirm-delete'>
+                                                                        <i class='icon-remove'></i>
+                                                                        {{ 'delete'|trans }}
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                {% endblock %}
+                                            {% endif %}
+                                        {% endembed %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

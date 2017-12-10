@@ -1,6 +1,6 @@
 <?php
 
-namespace Oni\UserManagerBundle\DependencyInjection;
+namespace App\Oni\UserManagerBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -24,5 +24,9 @@ class UserManagerExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('factories.yml');
+        
+        //$container->get('oni_event_dispatcher');
+        
     }
 }

@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/DependencyInjection/Security/UserSecurityFactory.php
-namespace Oni\UserManagerBundle\Security;
+namespace App\Oni\UserManagerBundle\Security;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

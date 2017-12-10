@@ -1,0 +1,13 @@
+oni_user_bundle:
+    users: Users
+    user: User
+    username: Username
+    password: Password
+    email: Email
+    email.address: Email Address
+    expired: Expired
+    login: Login
+    logout: Logout
+    user_added_successfully: User added successfully
+    user_update_successfully: User update successfully
+

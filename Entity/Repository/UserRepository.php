@@ -1,9 +1,12 @@
 <?php
 
-namespace Oni\UserManagerBundle\Entity\Repository;
+namespace App\Oni\UserManagerBundle\Entity\Repository;
 
-use Oni\CoreBundle\CoreGlobals;
-use Oni\ProductManagerBundle\ProductEvents;
+use App\Oni\CoreBundle\CoreBundle;
+use App\Oni\CoreBundle\CoreGlobals;
+use App\Oni\CoreBundle\Doctrine\Spec\Specification;
+use App\Oni\CoreBundle\Doctrine\Specification\SpecificationInterface;
+use App\Oni\ProductManagerBundle\ProductEvents;
 use Doctrine\ORM\EntityRepository;
 
 
@@ -18,24 +21,18 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class UserRepository extends EntityRepository
 {
 
+    private $table = CoreGlobals::USERS_ENTITY;
 
-    public function getUserByUsername($username){
 
-        if (!$username){ return false; }
+    function match(Specification $specification){
 
-        $qb = $this->getEntityManager()->createQueryBuilder()
-            ->select('u')
-            ->from(CoreGlobals::USERS_ENTITY, 'u')
-            ->where('u.username = :username')
-            ->setParameter('username', $username)
-            ->setMaxResults(1);
-
-        $results = $qb->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-        //expecting only one result so set the result to the first array element
-        $results = isset($results[0]) ? $results[0] : false;
-
-        return $results;
-
+        $qb = $this->createQueryBuilder('u');
+        $expr = $specification->match($qb, 'u');
+        //var_dump($expr);exit;
+        $query = $qb->where($expr)->getQuery();
+        $specification->modifyQuery($query);
+        return $query->getResult();
+        
     }
 
 }

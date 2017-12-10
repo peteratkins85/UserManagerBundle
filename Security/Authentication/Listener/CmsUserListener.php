@@ -1,5 +1,5 @@
 <?php// src/AppBundle/Security/Firewall/WsseListener.php
-namespace Oni\UserManagerBundle\Security\Authentication\Listener;
+namespace App\Oni\UserManagerBundle\Security\Authentication\Listener;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterfac
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-use Oni\UserManagerBundle\Security\Authentication\Token\CmsUserToken;
+use App\Oni\UserManagerBundle\Security\Authentication\Token\CmsUserToken;
 
 class CmsUserListener implements ListenerInterface
 {

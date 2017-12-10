@@ -1,0 +1,33 @@
+{# src/Atk/CmsBundle/Resources/views/security/login.html.twig #}
+{% extends 'CoreBundle:cms:base.html.twig' %}
+{% block title %}
+    {% if  pageName is defined  %}
+        {{ pageName }}
+    {% endif %}
+{% endblock %}
+{% form_theme form 'CoreBundle:cms/form:bootstrap_horizontal_layout.html.twig' %}
+{% block body %}
+    <section id='content'>
+        <div class='container-fluid'>
+            <div class='row-fluid' id='content-wrapper'>
+                <div class='span12'>
+                    {% embed 'CoreBundle:cms:content/content-header.html.twig' %}
+                        {% block contentTitle %} New Product Category {% endblock %}
+                    {%  endembed %}
+                    <div class="row-fluid">
+                        <div class="span12 box">
+                            <div class="box-content">
+                                {{ form_start(form) }}
+                                {{ form_row(form.username) }}
+                                {{ form_row(form.email)}}
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
